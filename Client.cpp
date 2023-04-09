@@ -3,6 +3,7 @@
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #include <windows.h>
+#include <string>
 
 using namespace std;
 
@@ -15,7 +16,7 @@ int client_init() {
     SOCKET ConnectSocket = INVALID_SOCKET;
     int Result;
 
-    const char* SendBuffer = "Hello from Client";
+    char SendBuffer[20];
 
     char recvBuffer[512];
 
@@ -64,16 +65,24 @@ int client_init() {
     }
 
     //возвращает коилчество переданных данных либо сокет ерор
-    Result = send(ConnectSocket, SendBuffer, (int)strlen(SendBuffer), 0 );
-    if (Result == SOCKET_ERROR) {
-        cout << "Send failed";
-        closesocket(ConnectSocket);
-        freeaddrinfo(addrResult);
-        WSACleanup();
-        return 1;
+    while (SendBuffer[0] != '&') {
+
+        cin >> SendBuffer;
+
+
+        Result = send(ConnectSocket, SendBuffer, (int) strlen(SendBuffer), 0);
+
+
+        if (Result == SOCKET_ERROR) {
+            cout << "Send failed";
+            closesocket(ConnectSocket);
+            freeaddrinfo(addrResult);
+            WSACleanup();
+            return 1;
+        }
     }
 
-    cout << "Sent: " << Result << " bytes" << endl;
+    cout << "Sent: " << SendBuffer << " bytes" << endl;
 
     Result = shutdown(ConnectSocket, SD_SEND);
     if (Result == SOCKET_ERROR) {
@@ -90,7 +99,7 @@ int client_init() {
         Result = recv(ConnectSocket, recvBuffer, 512, 0);
         if (Result > 0) {
             cout << "Recieved " << Result << " bytes" << endl;
-            cout << "Recieved data " << recvBuffer << endl;
+            //cout << "Recieved data " << recvBuffer << endl;
         } else if (Result == 0) {
             cout << "Connection closed";
         } else if (Result < 0) {
