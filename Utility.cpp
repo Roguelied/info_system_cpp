@@ -1,11 +1,7 @@
 #include "Utility.h"
 
 
-void wait() {
-    int a; cin >> a;
-}
-
-void gotoxy(int x, int y)
+void gotoxy(short x, short y)
 {
     COORD coord;
     coord.X = x;
@@ -15,8 +11,8 @@ void gotoxy(int x, int y)
 
 void InitializeSettings() {
     SetConsoleOutputCP( 65001 );
-    system("title Information system");
-    ::SendMessage(::GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000);
+    system("title Information system prototype");
+    ::SendMessage(::GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000); //fullscreen
     //system("mode con cols=129 lines=32");
 }
 

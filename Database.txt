@@ -1,0 +1,17 @@
+reserve some strings for general info
+//                                  //
+reserve some strings for general info
+
+01 TYPE SEAT DATE TO_WHERE PRICE //if reserved// RESERVATION_ID LASTNAME_FIRSTNAME_PATRONYMIC
+02
+03
+04
+05
+06
+07
+08
+09
+10
+11
+12
+13 etc

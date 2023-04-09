@@ -1,11 +1,5 @@
 #include "Client.h"
-#include <iostream>
-#include <WinSock2.h>
-#include <WS2tcpip.h>
-#include <windows.h>
-#include <string>
 
-using namespace std;
 
 
 int client_init() {
@@ -69,7 +63,6 @@ int client_init() {
 
         cin >> SendBuffer;
 
-
         Result = send(ConnectSocket, SendBuffer, (int) strlen(SendBuffer), 0);
 
 
@@ -110,7 +103,5 @@ int client_init() {
     closesocket(ConnectSocket);
     freeaddrinfo(addrResult);
     WSACleanup();
-    int a;
-    cin >> a;
     return 0;
 }

@@ -1,15 +1,5 @@
 #include "Server.h"
 
-//#define WIN32_LEAN_AND_MEAN
-
-#include <iostream>
-#include <WinSock2.h>
-#include <WS2tcpip.h>
-#include <windows.h>
-
-
-using namespace std;
-
 int server_init() {
 
     WSADATA wsaData;
@@ -130,7 +120,5 @@ int server_init() {
     closesocket(ClientSocket);
     freeaddrinfo(addrResult);
     WSACleanup();
-    int a;
-    cin >> a;
     return 0;
 }

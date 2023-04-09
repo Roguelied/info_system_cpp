@@ -1,13 +1,9 @@
-#define WIN32_LEAN_AND_MEAN
-
-#include <iostream>
-#include <WinSock2.h>
-#include <WS2tcpip.h>
-#include <windows.h>
+#include "Utility.h"
 #include "Server.h"
 #include "Client.h"
+#include "Database.h"
+#include "UserInterface.h"
 
-using namespace std;
 
 int main() {
 
@@ -17,7 +13,8 @@ int main() {
     cin >> asnw;
     if (asnw == 1) {
         client_init();
-    } else { server_init(); }
+        wait;
+    } else { server_init(); wait;}
 
 
 

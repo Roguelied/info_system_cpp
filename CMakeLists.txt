@@ -10,4 +10,4 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}
 link_libraries(ws2_32 wsock32)
 
 
-add_executable(info_system_cpp main.cpp UserInterface.cpp UserInterface.h Client.cpp Client.h Server.cpp Server.h Utility.cpp Utility.h)
+add_executable(info_system_cpp main.cpp UserInterface.cpp UserInterface.h Client.cpp Client.h Server.cpp Server.h Utility.cpp Utility.h Database.cpp Database.h)
