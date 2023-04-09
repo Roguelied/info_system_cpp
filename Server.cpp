@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int oaoaoa() {
+int server_init() {
 
     WSADATA wsaData;
     ADDRINFO hints;
