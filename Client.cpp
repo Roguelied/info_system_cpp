@@ -1,8 +1,8 @@
 #include "Client.h"
 #include <iostream>
-#include <windows.h>
 #include <WinSock2.h>
 #include <WS2tcpip.h>
+#include <windows.h>
 
 using namespace std;
 
@@ -101,6 +101,7 @@ int client_init() {
     closesocket(ConnectSocket);
     freeaddrinfo(addrResult);
     WSACleanup();
-
+    int a;
+    cin >> a;
     return 0;
 }

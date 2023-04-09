@@ -1,11 +1,12 @@
 #include "Server.h"
 
-#define WIN32_LEAN_AND_MEAN
+//#define WIN32_LEAN_AND_MEAN
 
 #include <iostream>
-#include <windows.h>
 #include <WinSock2.h>
 #include <WS2tcpip.h>
+#include <windows.h>
+
 
 using namespace std;
 
@@ -114,6 +115,8 @@ int server_init() {
         }
     } while (Result > 0);
 
+
+
     Result = shutdown(ClientSocket, SD_SEND);
     if (Result == SOCKET_ERROR) {
         cout << "shutdown client socket failed" << endl;
@@ -122,8 +125,12 @@ int server_init() {
         WSACleanup();
         return 1;
     }
+
+
     closesocket(ClientSocket);
     freeaddrinfo(addrResult);
     WSACleanup();
+    int a;
+    cin >> a;
     return 0;
 }
