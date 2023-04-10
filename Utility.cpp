@@ -1,7 +1,7 @@
 #include "Utility.h"
 
 
-void gotoxy(short x, short y)
+void gotoxy(int x, int y)
 {
     COORD coord;
     coord.X = x;
