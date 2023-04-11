@@ -4,6 +4,23 @@
 #include "Utility.h"
 
 
-int server_init();
+class Server {
+private:
+    WSADATA wsaData;
+    ADDRINFO hints;
+    ADDRINFO* addrResult = NULL;
+    SOCKET ClientSocket = INVALID_SOCKET;
+    SOCKET ListenSocket = INVALID_SOCKET;
+
+    char SendBuffer[512] = "ServerInfo";
+    char recvBuffer[512];
+
+public:
+
+    int Initialize();
+    int Listen();
+
+};
+
 
 #endif //INFO_SYSTEM_CPP_SERVER_H

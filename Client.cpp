@@ -1,26 +1,13 @@
 #include "Client.h"
 
 
-
-int client_init() {
-
-    WSADATA wsaData;
-    ADDRINFO hints;
-    ADDRINFO* addrResult = NULL;
-    SOCKET ConnectSocket = INVALID_SOCKET;
+int Client::Initialize() {
     int Result;
-
-    char SendBuffer[20];
-
-    char recvBuffer[512];
-
-    //инит сокетов
     Result = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (Result != 0) {
         cout << "WSAStartup failed";
         return 1;
     }
-
 
     //хинты
     ZeroMemory(&hints, sizeof(hints));
@@ -57,15 +44,17 @@ int client_init() {
         WSACleanup();
         return 0;
     }
+}
 
-    //возвращает коилчество переданных данных либо сокет ерор
+int Client::AskServer() {
+
+    int Result;
+
     while (SendBuffer[0] != '&') {
 
         cin >> SendBuffer;
 
         Result = send(ConnectSocket, SendBuffer, (int) strlen(SendBuffer), 0);
-
-
         if (Result == SOCKET_ERROR) {
             cout << "Send failed";
             closesocket(ConnectSocket);
@@ -73,9 +62,11 @@ int client_init() {
             WSACleanup();
             return 1;
         }
+
+        recv(ConnectSocket, recvBuffer, 512, 0);
+        cout << recvBuffer << endl;
     }
 
-    cout << "Sent: " << SendBuffer << " bytes" << endl;
 
     Result = shutdown(ConnectSocket, SD_SEND);
     if (Result == SOCKET_ERROR) {
@@ -86,22 +77,9 @@ int client_init() {
         return 1;
     }
 
-
-    do {
-        ZeroMemory(recvBuffer, 512);
-        Result = recv(ConnectSocket, recvBuffer, 512, 0);
-        if (Result > 0) {
-            cout << "Recieved " << Result << " bytes" << endl;
-            //cout << "Recieved data " << recvBuffer << endl;
-        } else if (Result == 0) {
-            cout << "Connection closed";
-        } else if (Result < 0) {
-            cout << "recv failed with error";
-        }
-    } while (Result > 0);
-
     closesocket(ConnectSocket);
     freeaddrinfo(addrResult);
     WSACleanup();
     return 0;
+
 }
