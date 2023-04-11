@@ -58,6 +58,41 @@ int UserInterface::StartMenu() {
     }
 }
 
+int UserInterface::InputPassword(char* buffer)
+{
+    char* ptr = buffer;
+    unsigned char symbol;
+
+    do
+    {
+        symbol = (unsigned char)getch();
+
+        if (symbol == 0x08 && ptr > buffer)
+        {
+            *--ptr = 0;
+            putch(VK_BKSPC);
+            putch(VK_SPACE);
+            putch(VK_BKSPC);
+            continue;
+        }
+
+        if (!symbol)
+        {
+            getch();
+            continue;
+        }
+
+        if (symbol > VK_SPACE - 1)
+        {
+            *ptr++ = symbol;
+            putch('*');
+        }
+    }
+    while (symbol != VK_RETURN);
+
+    *ptr = 0; // конец строки
+
+}
 
 int UserInterface::LogMenu() {
     int flag = 0;
@@ -106,7 +141,8 @@ int UserInterface::LogMenu() {
         if (flag == 0 and KeyCheck(Key) == "enter") {
             system("cls");
             return choice;
-        } else if (flag == 1 and KeyCheck(Key) == "e") {
+        } else if (flag == 1 and KeyCheck(Key) == "enter") {
+            char passwd[128] = {0};
             gotoxy(130, 29);
             TurnMagenta;
             for (int i = 0; i < 43; i++) {
@@ -126,29 +162,16 @@ int UserInterface::LogMenu() {
             cout << "ENTER PASSWORD";
             gotoxy(134, 37);
             cout << "Password : ";
-            string CorrectPassword = "11111";
-            string EnteringPassword;
-
-            for (int i = 0; i < 5; i++) {
-                EnteringPassword[i] = getchar();
-                //cout << "*";
-                //cout << EnteringPassword[i];
-//                if (KeyCheck(Key) == "enter") {
-
-//                }
-            }
-            if (EnteringPassword == CorrectPassword) {
-
-                cout << "              " <<EnteringPassword << "   "  << CorrectPassword;
-                wait;
-                exit(12);
+            InputPassword(passwd);
+            if (strcmp(AdminPassword, passwd) == 0) {
+                system("cls");
+                cout<<"zbs";
+                return 1;
             } else {
-                cout << "              " << EnteringPassword << "   "  << CorrectPassword;
-                wait;
-                exit(2);
+                cout<<"idi naxuy";
+                return 0;
             }
-
         }
-
     }
 }
+

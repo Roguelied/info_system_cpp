@@ -10,6 +10,7 @@
 #include <windows.h>
 #include <string>
 #include <vector>
+#include <cstdio>
 
 
 #define WIN32_LEAN_AND_MEAN //wtf is that?
@@ -23,6 +24,10 @@
 #define TurnWhite SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7)
 #define TurnBlack SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0)
 #define TurnBackGreen SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 32)
+
+#define VK_BKSPC   0x08
+#define VK_RETURN  0x0D
+#define VK_SPACE   0x20
 
 using namespace std;
 
