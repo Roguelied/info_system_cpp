@@ -6,17 +6,20 @@
 
 
 int main() {
-
-
-    int asnw;
-    cout << "1 for client else for server" << endl;
-    cin >> asnw;
-    if (asnw == 1) {
-        client_init();
-        wait;
-    } else { server_init(); wait;}
-
-
-
+    UserInterface A;
+    InitializeSettings();
+    A.LogMenu();
+    wait;
 
 }
+
+
+
+
+//    int asnw;
+//    cout << "1 for client else for server" << endl;
+//    cin >> asnw;
+//    if (asnw == 1) {
+//        client_init();
+//        wait;
+//    } else { server_init(); wait;}}
