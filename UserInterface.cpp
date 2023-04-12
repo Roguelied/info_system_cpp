@@ -1,13 +1,19 @@
+//super govnocode by notFOUND
 #include "UserInterface.h"
 #include "Utility.h"
-//super govnocode by notFOUND
 
+
+bool UserInterface::in_range(char *buff, const char *max)//от - до
+{
+    int lb = strlen(buff), lm = strlen(max);
+    return (lb != lm) ? (lb < lm) : strcmp(max, buff) >= 0;
+}
 
 
 int UserInterface::StartMenu() {
     int flag = 0;
     int choice = 0;
-    TurnMagenta;
+    TurnAqua;
     gotoxy(0, 30);
     for (int i = 0; i < 211; i++) {
         gotoxy(0 + i, 0);
@@ -24,7 +30,7 @@ int UserInterface::StartMenu() {
     gotoxy(50, 10);
     cout
             << "WECLOME TO SUPER DUPER SYSTEM32 IN DATA BASE FOR ADMINS/CLIENTS/PEOPLE/GOLLUMS/WOMEN/DEMONS/GHOSTS/KURT OBAIN";
-    TurnYellow;
+    TurnBackGreen;
     gotoxy(50, 27);
     cout << "LOG IN";
     TurnWhite;
@@ -36,12 +42,12 @@ int UserInterface::StartMenu() {
             TurnWhite;
             gotoxy(50, 27);
             cout << "LOG IN";
-            TurnYellow;
+            TurnBackGreen;
             gotoxy(150, 27);
             cout << "EXIT";
             flag = 1;
         } else if (KeyCheck(Key) == "a") {
-            TurnYellow;
+            TurnBackGreen;
             gotoxy(50, 27);
             cout << "LOG IN";
             TurnWhite;
@@ -58,11 +64,106 @@ int UserInterface::StartMenu() {
     }
 }
 
+int UserInterface::InputPassword(char *buffer) {
+    char *ptr = buffer;
+    unsigned char symbol;
+
+    gotoxy(145, 37);
+
+
+    do {
+        symbol = (unsigned char) getch();
+
+        if (symbol == VK_BKSPC && ptr > buffer) {
+            *--ptr = 0;
+            putch(VK_BKSPC);
+            putch(VK_SPACE);
+            putch(VK_BKSPC);
+            continue;
+        }
+        if (symbol == VK_ESCAPE) { //esc
+            for (int i = 130; i < 173; i++) {
+                for (int j = 29; j < 44; j++) {
+                    gotoxy(i, j);
+                    cout << " ";
+                }
+            }
+            return 3;
+        }
+
+        if (!symbol) {
+            getch();
+            continue;
+        }
+        if (symbol > VK_SPACE - 1 and (in_range(buffer, MAX_PASS))) {
+            *ptr++ = symbol;
+            putch('*');
+        } else { *ptr = 0; }
+    } while (symbol != VK_RETURN);
+    *ptr = 0;
+
+
+    if (strcmp(AdminPassword, buffer) == 0) {
+        int flagg=0;
+        gotoxy(145,39);
+        TurnLightRed;
+        cout<<"log in to : ";
+        TurnBackGreen;
+        cout<<"admin";
+        TurnLightRed;
+        gotoxy(145,41);
+        cout<<"log in to : ";
+        TurnWhite;
+        cout<<"server";
+        for(;;){
+            int Key = _getch();
+            if(KeyCheck(Key)=="s"){
+                gotoxy(157,39);
+                TurnWhite;
+                cout<<"admin";
+                gotoxy(157,41);
+                TurnBackGreen;
+                cout<<"server";
+                flagg=1;
+            } else if (KeyCheck(Key)=="w"){
+                gotoxy(157,39);
+                TurnBackGreen;
+                cout<<"admin";
+                gotoxy(157,41);
+                TurnWhite;
+                cout<<"server";
+                flagg=0;
+            }if(flagg==0 and KeyCheck(Key)=="enter"){
+                system("cls");
+                return 5;                                                               //admin-5
+            } else if(flagg==1 and KeyCheck(Key)=="enter"){
+                system("cls");
+                return 6;                                                               //server-6
+            }
+        }
+
+
+
+
+
+
+    } else {
+        gotoxy(145, 34);
+        cout << "WRONG PASSWORD";
+        sleep_for(milliseconds(500));
+        gotoxy(145, 34);
+        cout << "              ";
+        gotoxy(145, 37);
+        cout << "           ";
+        gotoxy(145, 37);
+        return 2;
+    }
+}
 
 int UserInterface::LogMenu() {
     int flag = 0;
     int choice = 0;
-    TurnMagenta;
+    TurnAqua;
     gotoxy(0, 30);
     for (int i = 0; i < 211; i++) {
         gotoxy(0 + i, 0);
@@ -78,24 +179,27 @@ int UserInterface::LogMenu() {
     }
     gotoxy(99, 10);
     cout << "WHO ARE YOU?";
-    TurnYellow;
+    TurnBackGreen;
     gotoxy(50, 27);
     cout << "USER";
     TurnWhite;
     gotoxy(150, 27);
     cout << "ADMIN";
+
+    int flag2 = 0;
     while (true) {
+        if (flag2 == 1) {break;}
         int Key = _getch();
         if (KeyCheck(Key) == "d") {
             TurnWhite;
             gotoxy(50, 27);
             cout << "USER";
-            TurnYellow;
+            TurnBackGreen;
             gotoxy(150, 27);
             cout << "ADMIN";
             flag = 1;
         } else if (KeyCheck(Key) == "a") {
-            TurnYellow;
+            TurnBackGreen;
             gotoxy(50, 27);
             cout << "USER";
             TurnWhite;
@@ -106,9 +210,11 @@ int UserInterface::LogMenu() {
         if (flag == 0 and KeyCheck(Key) == "enter") {
             system("cls");
             return choice;
-        } else if (flag == 1 and KeyCheck(Key) == "e") {
-            gotoxy(130, 29);
-            TurnMagenta;
+
+        } else if (flag == 1 and KeyCheck(Key) == "enter") {
+            char passwd[128] = {0};
+            //gotoxy(130, 29);
+            TurnAqua;
             for (int i = 0; i < 43; i++) {
                 gotoxy(130 + i, 29);
                 cout << "▀";
@@ -126,29 +232,30 @@ int UserInterface::LogMenu() {
             cout << "ENTER PASSWORD";
             gotoxy(134, 37);
             cout << "Password : ";
-            string CorrectPassword = "11111";
-            string EnteringPassword;
 
-            for (int i = 0; i < 5; i++) {
-                EnteringPassword[i] = getchar();
-                //cout << "*";
-                //cout << EnteringPassword[i];
-//                if (KeyCheck(Key) == "enter") {
 
-//                }
+
+
+
+            for (;;) {
+                int res = InputPassword(passwd);
+                if (res == 5 or res==6) {
+                    flag2 = 1;
+                    break;
+                }
+                if (res == 2) {
+                    continue;
+                }
+                if (res == 3) {
+                    break;
+                }
             }
-            if (EnteringPassword == CorrectPassword) {
-
-                cout << "              " <<EnteringPassword << "   "  << CorrectPassword;
-                wait;
-                exit(12);
-            } else {
-                cout << "              " << EnteringPassword << "   "  << CorrectPassword;
-                wait;
-                exit(2);
-            }
-
         }
-
     }
+
 }
+
+
+
+
+

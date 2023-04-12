@@ -2,7 +2,7 @@
 #define INFO_SYSTEM_CPP_UTILITY_H
 
 
-
+#include <chrono>
 #include <iostream>
 #include <WinSock2.h>
 #include <WS2tcpip.h>
@@ -10,6 +10,8 @@
 #include <windows.h>
 #include <string>
 #include <vector>
+#include <cstdio>
+#include <thread>
 
 
 #define WIN32_LEAN_AND_MEAN //wtf is that?
@@ -22,7 +24,18 @@
 #define TurnBrightAqua SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11)
 #define TurnWhite SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7)
 #define TurnBlack SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0)
+#define TurnGreen SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2)
 #define TurnBackGreen SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 32)
+
+#define VK_BKSPC   0x08
+#define VK_RETURN  0x0D
+#define VK_SPACE   0x20
+
+
+#define MAX_PASS   "4294967295"
+
+using namespace std::this_thread;
+using namespace std::chrono;
 
 using namespace std;
 
