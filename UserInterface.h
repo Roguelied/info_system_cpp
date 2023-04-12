@@ -6,7 +6,11 @@
 class UserInterface {
 private:
 
+
 public:
+    int StartMenu();
+    int LogMenu();
+
 
 };
 
