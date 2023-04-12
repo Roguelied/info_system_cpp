@@ -33,7 +33,7 @@
 
 
 #define MAX_PASS   "4294967295"
-#define MAX_USERLOGIN   "1111111111111111111111111111111111111111111111111"
+#define MAX_LOGIN   "1111111111111111111111111111111111111111111111111"
 
 
 using namespace std::this_thread;
@@ -45,7 +45,7 @@ using namespace std;
 void InitializeSettings();
 void gotoxy(int x, int y);
 string KeyCheck(int Key);
-
+bool in_range(char *buff, const char *max);
 
 
 
