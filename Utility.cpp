@@ -38,4 +38,8 @@ string KeyCheck(int Key) {
     if (Key == 27) {
         return "esc";
     }
+    if(Key == 9){
+        return "tab";
+    }
 }
+

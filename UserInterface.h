@@ -8,7 +8,7 @@ private:
     char AdminPassword[5] = {'a', 'd', 'm', 'i', 'n'};
     int Selector;
 public:
-
+    bool in_range(char* buff, const char* max);
     int StartMenu();
     int LogMenu();
     int InputPassword(char* buffer);
