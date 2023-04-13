@@ -9,7 +9,6 @@
 int main() {
     InitializeSettings();
     UserInterface A;
-    //A.StartMenu();
     A.LogMenu();
     wait;
     
