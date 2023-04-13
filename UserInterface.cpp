@@ -109,9 +109,8 @@ int UserInterface::ADMINchoice() {
     string res = Input(145, 37, MAX_PASS, '*');
     if (res == "-1") {return -1;}
     if (res != ADMINpsswrd) {
-
         TurnLightRed; gotoxy(145, 34); cout << "WRONG PASSWORD";
-        sleep_for(milliseconds(500));
+        sleep_for(milliseconds(1200));
         TurnWhite; gotoxy(145, 34); cout << "              ";
         gotoxy(145, 37); cout << "           "; gotoxy(145, 37);
         return 0;
@@ -247,7 +246,13 @@ int UserInterface::LogMenu() {
                     gotoxy(54, 31);
                     flaglog = 1;
                     //login
-                } else if (flaglog and KeyCheck(key) == "enter") {
+                }
+                else if(KeyCheck(key)=="esc"){
+                    Clear(42, 29, 61, 35);
+                    gotoxy(54, 27);
+                    break;
+                }
+                else if (flaglog and KeyCheck(key) == "enter") {
                     Clear(42, 29, 61, 35);
                     TurnAqua;
                     DrawFrame(10, 29, 100, 39);
@@ -263,7 +268,8 @@ int UserInterface::LogMenu() {
                         Clear(10, 29, 100, 39);
                         gotoxy(54, 27);
                         break;
-                    } else{system("cls");}
+                    }
+                    //else{system("cls");}
                     string pas = Input(26, 36, MAX_PASS, '*');
                     if (pas == "-1") {
                         Clear(10, 29, 100, 39);
@@ -304,7 +310,7 @@ int UserInterface::LogMenu() {
                     }
                     if(Newpas!=Repitnewpas){
                         TurnLightRed;gotoxy(50,41);cout << "PASSWORDS MISMATCH";
-                        sleep_for(milliseconds(500));
+                        sleep_for(milliseconds(1200));
                         TurnWhite;gotoxy(50,41);cout<<"                  ";
                         gotoxy(31, 39);cout<<"                 ";
                         gotoxy(31, 36);cout<<"                 ";
