@@ -64,6 +64,7 @@ string UserInterface::Input(int x, int y, const char *length, char replace) {
 int UserInterface::StartMenu() {
     int flag = 0;
     int choice = 0;
+    ColorInputToXY(0, 30, "", TurnAqua);
     TurnAqua;
     gotoxy(0, 30);
     DrawFrame(0, 0, 210, 53);
@@ -115,7 +116,7 @@ int UserInterface::AdminChoice() {
     string res = Input(145, 37, MAX_PASS, '*');
     if (res == "-1") {return -1;}
     if (res != AdminPsswrd) {
-        TurnBrightRed; gotoxy(145, 34); cout << "WRONG PASSWORD";
+        TurnRed; gotoxy(145, 34); cout << "WRONG PASSWORD";
         sleep_for(milliseconds(1200));
         TurnWhite; gotoxy(145, 34); cout << "              ";
         gotoxy(145, 37); cout << "           "; gotoxy(145, 37);
@@ -314,7 +315,7 @@ int UserInterface::LogMenu() {
                         break;
                     }
                     if(Newpas!=Repitnewpas){
-                        TurnLightRed;gotoxy(50,41);cout << "PASSWORDS MISMATCH";
+                        TurnRed;gotoxy(50,41);cout << "PASSWORDS MISMATCH";
                         sleep_for(milliseconds(1200));
                         TurnWhite;gotoxy(50,41);cout<<"                  ";
                         gotoxy(31, 39);cout<<"                 ";
