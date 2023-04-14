@@ -1,3 +1,4 @@
+
 #include "Utility.h"
 
 
@@ -40,8 +41,17 @@ string KeyCheck(int Key) {
     }
     if(Key == 9){
         return "tab";
-    }
+    } else {return "UNKNOWN";}
 }
+
+
+void ColorInputToXY(WINBOOL ChangeColor, int x, int y, string str) {
+    ChangeColor;
+    gotoxy(x, y);
+    cout << str;
+}
+
+
 
 bool in_range(char *buff, const char *max) {
     int lb = strlen(buff), lm = strlen(max);

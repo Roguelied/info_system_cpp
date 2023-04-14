@@ -106,6 +106,7 @@ int UserInterface::StartMenu() {
         } else if (flag == 1 and KeyCheck(Key) == "enter") {
             exit(0);
         }
+        sleep_for(milliseconds(100));
     }
 }
 
@@ -114,7 +115,7 @@ int UserInterface::AdminChoice() {
     string res = Input(145, 37, MAX_PASS, '*');
     if (res == "-1") {return -1;}
     if (res != AdminPsswrd) {
-        TurnLightRed; gotoxy(145, 34); cout << "WRONG PASSWORD";
+        TurnBrightRed; gotoxy(145, 34); cout << "WRONG PASSWORD";
         sleep_for(milliseconds(1200));
         TurnWhite; gotoxy(145, 34); cout << "              ";
         gotoxy(145, 37); cout << "           "; gotoxy(145, 37);

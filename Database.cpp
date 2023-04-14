@@ -78,7 +78,7 @@ void Booking::SaveCustomer(Booking & Booking){ //запись в файл
         cout << "Введите ID брони" << endl;
         cin >> ID;
         Booking.SetID(ID);
-        out << count+1 << " " << Booking.GetWagonType() << " " << Booking.GetDateAndTime() << " " << Booking.GetPlace() << " " << Booking.GetPrice() << " " << Booking.GetID() << " " << Booking.GetName() << endl;
+        cout << count+1 << " " << Booking.GetWagonType() << " " << Booking.GetDateAndTime() << " " << Booking.GetPlace() << " " << Booking.GetPrice() << " " << Booking.GetID() << " " << Booking.GetName() << endl;
     }
     out.close();
     system("pause");

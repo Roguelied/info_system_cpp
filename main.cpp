@@ -8,6 +8,8 @@
 
 int main() {
     InitializeSettings();
+    ColorInputToXY(TurnGreen, 10, 10, "GOVNO (ZELENOE)");
+    wait;
     UserInterface A;
     A.StartMenu();
     A.MainMenu();
@@ -23,7 +25,7 @@ int main() {
     
    Booking Booking;
    Booking.SaveCustomer(Booking); */
-=======
+
 }
 
 

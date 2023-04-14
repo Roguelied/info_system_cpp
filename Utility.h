@@ -12,13 +12,13 @@
 #include <vector>
 #include <cstdio>
 #include <thread>
-
+#include <functional>
 
 #define WIN32_LEAN_AND_MEAN //wtf is that?
 
 
 #define wait getch()
-#define TurnLightRed SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4)
+#define TurnBrightRed SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4)
 #define TurnMagenta SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5)
 #define TurnYellow SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6)
 #define TurnAqua SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3)
@@ -60,6 +60,6 @@ void InitializeSettings();
 void gotoxy(int x, int y);
 string KeyCheck(int Key);
 bool in_range(char *buff, const char *max);
-
+void ColorInputToXY(WINBOOL ChangeColor, int x, int y, string str);
 
 #endif //INFO_SYSTEM_CPP_UTILITY_H
