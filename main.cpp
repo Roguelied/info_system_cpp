@@ -10,7 +10,7 @@ int main() {
     InitializeSettings();
     UserInterface A;
     A.StartMenu();
-    A.LogMenu();
+    A.MainMenu();
     wait;
     
    /* int asnw;
