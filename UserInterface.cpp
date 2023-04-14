@@ -64,20 +64,11 @@ string UserInterface::Input(int x, int y, const char *length, char replace) {
 int UserInterface::StartMenu() {
     int flag = 0;
     int choice = 0;
-    ColorInputToXY(0, 30, "", TurnAqua);
-    TurnAqua;
-    gotoxy(0, 30);
+    AdvancedInputToXY(0, 30, TurnAqua);
     DrawFrame(0, 0, 210, 53);
-    TurnWhite;
-    gotoxy(50, 10);
-    cout
-            << "WECLOME TO SUPER DUPER SYSTEM32 IN DATA BASE FOR ADMINS/CLIENTS/PEOPLE/GOLLUMS/WOMEN/DEMONS/GHOSTS/KURT COBAIN";
-    TurnBackGreen;
-    gotoxy(50, 27);
-    cout << "LOG IN";
-    TurnWhite;
-    gotoxy(150, 27);
-    cout << "EXIT";
+    AdvancedInputToXY(50, 10, TurnWhite, "WECLOME TO SUPER DUPER SYSTEM32 IN DATA BASE FOR ADMINS/CLIENTS/PEOPLE/GOLLUMS/WOMEN/DEMONS/GHOSTS/KURT COBAIN");
+    AdvancedInputToXY(50, 27, TurnBackGreen, "LOG IN");
+    AdvancedInputToXY(150, 27, TurnWhite, "EXIT");
     gotoxy(56, 27);
     while (true) {
         int Key = _getch();
@@ -116,10 +107,11 @@ int UserInterface::AdminChoice() {
     string res = Input(145, 37, MAX_PASS, '*');
     if (res == "-1") {return -1;}
     if (res != AdminPsswrd) {
-        TurnRed; gotoxy(145, 34); cout << "WRONG PASSWORD";
+        AdvancedInputToXY(145, 34, TurnRed, "WRONG PASSWORD");
         sleep_for(milliseconds(1200));
-        TurnWhite; gotoxy(145, 34); cout << "              ";
-        gotoxy(145, 37); cout << "           "; gotoxy(145, 37);
+        AdvancedInputToXY(145, 34, TurnWhite, "              ");
+        AdvancedInputToXY(145, 37, "           ");
+        gotoxy(145, 37);
         return 0;
 
 

@@ -45,12 +45,12 @@ string KeyCheck(int Key) {
 }
 
 
-void ColorInputToXY(int x, int y, string str, WINBOOL Color) {
+void AdvancedInputToXY(int x, int y, string str, WINBOOL Color) {
     gotoxy(x, y);
     cout << str;
 }
-void ColorInputToXY(int x, int y, WINBOOL Color,  string str) { //overload
-    ColorInputToXY(x, y, str, Color);
+void AdvancedInputToXY(int x, int y, WINBOOL Color,  string str) { //overload
+    AdvancedInputToXY(x, y, str, Color);
 }
 
 

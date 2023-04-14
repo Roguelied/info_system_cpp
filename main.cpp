@@ -9,9 +9,6 @@
 int main() {
     InitializeSettings();
 
-
-    ColorInputToXY(10, 29, TurnRed, "GOVNO (ZELENOE)");
-    wait;
     UserInterface A;
     A.StartMenu();
     A.MainMenu();

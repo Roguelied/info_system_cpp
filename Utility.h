@@ -52,7 +52,7 @@ void gotoxy(int x, int y);
 string KeyCheck(int Key);
 bool in_range(char *buff, const char *max);
 
-void ColorInputToXY(int x, int y, string str = "", WINBOOL Color = TurnWhite);
-void ColorInputToXY(int x, int y, WINBOOL Color = TurnWhite,  string str = "");
+void AdvancedInputToXY(int x, int y, string str = "", WINBOOL Color = TurnWhite);
+void AdvancedInputToXY(int x, int y, WINBOOL Color = TRUE,  string str = "");
 
 #endif //INFO_SYSTEM_CPP_UTILITY_H
