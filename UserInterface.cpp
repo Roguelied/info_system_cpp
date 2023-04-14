@@ -33,27 +33,29 @@ string UserInterface::Input(int x, int y, const char *length, char replace) {
     do {
         symbol = (unsigned char) getch();
 
-        if (symbol == VK_BKSPC && ptr > buffer) {
+        if (symbol == VK_BKSPC  && ptr > buffer) {
             *--ptr = 0;
             putch(VK_BKSPC);
             putch(VK_SPACE);
             putch(VK_BKSPC);
             continue;
         }
-
+        //if (symbol== VK_RIGHT){
+            //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        //}
         if (symbol == VK_ESCAPE) { return "-1"; }
 
-        if (!symbol) {
+        if (!symbol  ) {
             getch();
             continue;
         }
 
-        if (symbol > VK_SPACE - 1 and (in_range(buffer, length))) {
+        if (symbol > VK_SPACE  and (in_range(buffer, length))) {
             *ptr++ = symbol;
             if (replace == ' ') { putch(symbol); }
             else { putch(replace); }
         }
-    } while (symbol != VK_RETURN);
+    } while (symbol != VK_RETURN );
     *ptr = 0;
     return buffer;
 }
@@ -65,9 +67,10 @@ int UserInterface::StartMenu() {
     TurnAqua;
     gotoxy(0, 30);
     DrawFrame(0, 0, 210, 53);
+    TurnWhite;
     gotoxy(50, 10);
     cout
-            << "WECLOME TO SUPER DUPER SYSTEM32 IN DATA BASE FOR ADMINS/CLIENTS/PEOPLE/GOLLUMS/WOMEN/DEMONS/GHOSTS/KURT OBAIN";
+            << "WECLOME TO SUPER DUPER SYSTEM32 IN DATA BASE FOR ADMINS/CLIENTS/PEOPLE/GOLLUMS/WOMEN/DEMONS/GHOSTS/KURT COBAIN";
     TurnBackGreen;
     gotoxy(50, 27);
     cout << "LOG IN";
@@ -94,7 +97,9 @@ int UserInterface::StartMenu() {
             cout << "EXIT";
             gotoxy(56, 27);
             flag = 0;
-        }
+        } //else if (KeyCheck(Key)!="a" and KeyCheck(Key)!="d"){
+
+        //}
         if (flag == 0 and KeyCheck(Key) == "enter") {
             system("cls");
             return choice;
@@ -105,17 +110,19 @@ int UserInterface::StartMenu() {
 }
 
 
-int UserInterface::ADMINchoice() {
+int UserInterface::AdminChoice() {
     string res = Input(145, 37, MAX_PASS, '*');
     if (res == "-1") {return -1;}
-    if (res != ADMINpsswrd) {
+    if (res != AdminPsswrd) {
         TurnLightRed; gotoxy(145, 34); cout << "WRONG PASSWORD";
         sleep_for(milliseconds(1200));
         TurnWhite; gotoxy(145, 34); cout << "              ";
         gotoxy(145, 37); cout << "           "; gotoxy(145, 37);
         return 0;
 
-    } else if(res==ADMINpsswrd) {
+
+
+    } else if(res==AdminPsswrd) {
 
         int flagg = 0;
         TurnWhite; gotoxy(145, 39); cout << "log in to : ";
@@ -154,6 +161,7 @@ int UserInterface::LogMenu() {
     TurnAqua;
     gotoxy(0, 30);
     DrawFrame(0, 0, 210, 53);
+    TurnWhite;
     gotoxy(99, 10);
     cout << "WHO ARE YOU?";
     TurnBackGreen;
@@ -167,7 +175,6 @@ int UserInterface::LogMenu() {
     while (true) {
         int Key = _getch();
         if (KeyCheck(Key) == "d") {
-
             TurnWhite;
             gotoxy(50, 27);
             cout << "USER";
@@ -175,9 +182,7 @@ int UserInterface::LogMenu() {
             gotoxy(150, 27);
             cout << "ADMIN";
             isAdmin = 1;
-
         } else if (KeyCheck(Key) == "a") {
-
             TurnBackGreen;
             gotoxy(50, 27);
             cout << "USER";
@@ -196,7 +201,7 @@ int UserInterface::LogMenu() {
             gotoxy(134, 37);
             cout << "Password : ";
             for (;;) {
-                int res = ADMINchoice();
+                int res = AdminChoice();
                 if (res == -1) {
                     TurnWhite;
                     Clear(130, 29, 172, 43);
@@ -213,7 +218,6 @@ int UserInterface::LogMenu() {
                 }
             }
         }
-
         else if (!isAdmin and KeyCheck(Key) == "enter") {
             int flaglog = 1;
             TurnAqua;
@@ -323,6 +327,37 @@ int UserInterface::LogMenu() {
             }
         }
     }
+}
+
+
+void UserInterface::MainMenu() {
+    //admin
+//if(LogMenu()==-2){
+    system("cls");
+    TurnAqua;
+    DrawFrame(0, 0, 210, 53);
+    TurnWhite;
+    gotoxy(20,4);
+    cout<<"CHOSE THE DATE";
+    TurnBackGreen;
+    gotoxy(25,17);
+    cout<<"05.05";
+    TurnWhite;
+    gotoxy(25,24);
+    cout<<"06.06";
+    TurnWhite;
+    gotoxy(25,31);
+    cout<<"07.07";
+    gotoxy(30,17);
+
+
+//}
+
+
+
+
+
+
 }
 
 

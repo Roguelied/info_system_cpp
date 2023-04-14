@@ -16,6 +16,7 @@
 
 #define WIN32_LEAN_AND_MEAN //wtf is that?
 
+
 #define wait getch()
 #define TurnLightRed SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4)
 #define TurnMagenta SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 5)
@@ -27,9 +28,21 @@
 #define TurnGreen SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2)
 #define TurnBackGreen SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 32)
 
+
 #define VK_BKSPC   0x08
 #define VK_RETURN  0x0D
 #define VK_SPACE   0x20
+#define VK_PRIOR	0x21
+#define VK_NEXT	0x22
+#define VK_END	0x23
+#define VK_HOME	0x24
+#define VK_LEFT	0x25
+#define VK_UP	0x26
+#define VK_RIGHT	0x27
+#define VK_DOWN	0x28
+#define VK_F11	0x7A
+#define VK_F12	0x7B
+#define VK_DELETE	0x2E
 
 
 #define MAX_PASS   "4294967295"
@@ -39,6 +52,7 @@
 using namespace std::this_thread;
 using namespace std::chrono;
 
+
 using namespace std;
 
 
@@ -46,13 +60,6 @@ void InitializeSettings();
 void gotoxy(int x, int y);
 string KeyCheck(int Key);
 bool in_range(char *buff, const char *max);
-
-
-
-
-
-
-
 
 
 #endif //INFO_SYSTEM_CPP_UTILITY_H
