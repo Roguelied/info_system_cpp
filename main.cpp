@@ -4,34 +4,19 @@
 #include "Database.h"
 #include "UserInterface.h"
 
-
+string UserInterface::AdminPsswrd = "admin";
 
 int main() {
     InitializeSettings();
 
-    UserInterface A;
-    A.StartMenu();
-    A.MainMenu();
+    UserInterface::StartMenu();
+    UserInterface::LogMenu();
+    UserInterface::MainMenu();
     wait;
-    
-   /* int asnw;
-    cout << "1 for client else for server" << endl;
-    cin >> asnw;
-    if (asnw == 1) {
-        client_init();
-        wait;
-    } else { server_init(); wait;}
-    
-   Booking Booking;
-   Booking.SaveCustomer(Booking); */
+
+    /*
+    Booking Booking;
+    Booking.SaveCustomer(Booking); */
 
 }
 
-
-//    int asnw;
-//    cout << "1 for client else for server" << endl;
-//    cin >> asnw;
-//    if (asnw == 1) {
-//        client_init();
-//        wait;
-//    } else { server_init(); wait;}}

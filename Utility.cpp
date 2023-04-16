@@ -1,6 +1,4 @@
-
 #include "Utility.h"
-
 
 void gotoxy(int x, int y)
 {
@@ -36,21 +34,21 @@ string KeyCheck(int Key) {
     if (Key == 'e' or Key == 'E' or Key == 227 or Key == 147) {
         return "e";
     }
-    if (Key == 27) {
+    if (Key == VK_ESCAPE) {
         return "esc";
     }
-    if(Key == 9){
+    if(Key == VK_TAB){
         return "tab";
-    } else {return "UNKNOWN";}
+    } else {return "NONE";}
 }
 
 
-void AdvancedInputToXY(int x, int y, string str, WINBOOL Color) {
+void AdvancedOutputToXY(int x, int y, string str, WINBOOL Color) {
     gotoxy(x, y);
     cout << str;
 }
-void AdvancedInputToXY(int x, int y, WINBOOL Color,  string str) { //overload
-    AdvancedInputToXY(x, y, str, Color);
+void AdvancedOutputToXY(int x, int y, WINBOOL Color,  string str) { //overload
+    AdvancedOutputToXY(x, y, str, Color);
 }
 
 

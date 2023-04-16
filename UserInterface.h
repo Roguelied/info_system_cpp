@@ -5,20 +5,20 @@
 
 class UserInterface {
 private:
-    string AdminPsswrd="admin";
-    int Selector;
+    static string AdminPsswrd;
+    static int Selector;
 public:
-    void DrawFrame(int x1,int y1,int x2,int y2);
+    static void DrawFrame(int x1,int y1,int x2,int y2);
     static void Clear(int x1,int x2,int y1,int y2);
-    int AdminChoice();
-    string Input(int x, int y, const char* length, char replace);
-    int LogMenu();
+    static int AdminChoice();
+    static string Input(int x, int y, const char* length, char replace);
+    static int LogMenu();
 
 
 
 
-    int StartMenu();
-    void MainMenu();
+    static int StartMenu();
+    static void MainMenu();
 
 };
 
