@@ -31,7 +31,8 @@ public:
 
 
     void SaveCustomer(Booking & Booking);
-
+    static void RegUser(string Login, string Password);
+    static void FindUser(string Login, string Password);
 };
 
 

@@ -9,9 +9,10 @@ string UserInterface::AdminPsswrd = "admin";
 int main() {
     InitializeSettings();
 
-    UserInterface::StartMenu();
-    UserInterface::LogMenu();
-    UserInterface::MainMenu();
+    Booking::RegUser("123123", "123123");
+//    UserInterface::StartMenu();
+//    UserInterface::LogMenu();
+//    UserInterface::MainMenu();
     wait;
 
     /*

@@ -1,8 +1,5 @@
 #include "Database.h"
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <iomanip>
+
 
 string Booking::GetName() {
     return Name;
@@ -78,10 +75,24 @@ void Booking::SaveCustomer(Booking & Booking){ //запись в файл
         cout << "Введите ID брони" << endl;
         cin >> ID;
         Booking.SetID(ID);
-        cout << count+1 << " " << Booking.GetWagonType() << " " << Booking.GetDateAndTime() << " " << Booking.GetPlace() << " " << Booking.GetPrice() << " " << Booking.GetID() << " " << Booking.GetName() << endl;
+        out << count+1 << " " << Booking.GetWagonType() << " " << Booking.GetDateAndTime() << " " << Booking.GetPlace() << " " << Booking.GetPrice() << " " << Booking.GetID() << " " << Booking.GetName() << endl;
     }
     out.close();
     system("pause");
+}
+
+void Booking::RegUser(string Login, string Password) {
+    std::ifstream USERS("C:\\Users\\Roguelied\\CLionProjects\\info_system_cpp\\Users.txt");
+    //USERS.open("C:\\Users\\Roguelied\\CLionProjects\\info_system_cpp\\Users.txt", fstream::in | fstream::out | fstream::ate); //doesnt work
+    string str; getline(USERS, str);
+    cout << str;
+
+
+    USERS.close();
+}
+
+void Booking::FindUser(string Login, string Password) {
+
 }
 
 void LoadCustomer(){
