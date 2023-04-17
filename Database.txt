@@ -1,17 +1,10 @@
-reserve some strings for general info
-//                                  //
-reserve some strings for general info
+2
+  
+0 0 0
+ 
+   
 
-01 TYPE SEAT DATE TO_WHERE PRICE //if reserved// RESERVATION_ID LASTNAME_FIRSTNAME_PATRONYMIC
-02
-03
-04
-05
-06
-07
-08
-09
-10
-11
-12
-13 etc
+Давыдов Василий Васильевич
+12 5 2004
+Хабаровск Владивосток
+11 IP9324 12832 

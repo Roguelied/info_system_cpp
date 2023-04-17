@@ -1,49 +1,5 @@
 #include "Database.h"
 
-
-string Booking::GetName() {
-    return Name;
-}
-void Booking::SetName(string Name) {
-    this -> Name = Name;
-}
-string Booking::GetWagonType() {
-    return WagonType;
-}
-void Booking::SetWagonType(string WagonType) {
-    this -> WagonType = WagonType;
-}
-string Booking::GetPlace() {
-    return Place;
-}
-void Booking::SetPlace(string Place) {
-    this -> Place = Place;
-}
-string Booking::GetDateAndTime() {
-    return DateAndTime;
-}
-void Booking::SetDateAndTime(string DateAndTime) {
-    this -> DateAndTime = DateAndTime;
-}
-string Booking::GetRoute() {
-    return Route;
-}
-void Booking::SetRoute(string Route) {
-    this -> Route = Route;
-}
-string Booking::GetPrice() {
-    return Price;
-}
-void Booking::SetPrice(string Price) {
-    this -> Price = Price;
-}
-string Booking::GetID() {
-    return ID;
-}
-void Booking::SetID(string ID) {
-    this -> ID = ID;
-}
-
 void Booking::SaveCustomer(Booking & Booking){ //запись в файл
     char ch[255]; string line;
     int count = 0;
