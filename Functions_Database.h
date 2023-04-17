@@ -1,0 +1,10 @@
+#include "Data.h"
+
+void DataEntry(Data* (&d), int& n);
+void Print(Data* d, int n);
+void DataChange(Data* d, int n);
+void Copy(Data *d_n, Data *d_o, int n);
+void AddData(Data* (&d), int& n);
+void DeleteData(Data* (&d), int& n);
+void SortingData(Data* d, int n);
+void SaveData(Data* d, int n, string fileName);
