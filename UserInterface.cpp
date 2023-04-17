@@ -6,13 +6,18 @@
 ========================================================================================================================*/
 
 void UserInterface::DrawFrame(int x1, int y1, int x2, int y2) {
+    TurnAqua;
     for (int i = x1; i < x2 + 1; i++) {
-        gotoxy(i, y1); cout << "▀";
-        gotoxy(i, y2); cout << "▄";
+        gotoxy(i, y1);
+        cout << "▀";
+        gotoxy(i, y2);
+        cout << "▄";
     }
     for (int j = y1; j < y2 + 1; j++) {
-        gotoxy(x1, j); cout << "█";
-        gotoxy(x2, j); cout << "█";
+        gotoxy(x1, j);
+        cout << "█";
+        gotoxy(x2, j);
+        cout << "█";
     }
 }
 
@@ -35,7 +40,7 @@ string UserInterface::Input(int x, int y, const char *length, char replace) {
     do {
         symbol = (unsigned char) getch();
 
-        if (symbol == VK_BKSPC  && ptr > buffer) {
+        if (symbol == VK_BKSPC && ptr > buffer) {
             *--ptr = 0;
             putch(VK_BKSPC);
             putch(VK_SPACE);
@@ -43,21 +48,21 @@ string UserInterface::Input(int x, int y, const char *length, char replace) {
             continue;
         }
         //if (symbol== VK_RIGHT){
-            //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         //}
         if (symbol == VK_ESCAPE) { return "-1"; }
 
-        if (!symbol  ) {
+        if (!symbol) {
             getch();
             continue;
         }
 
-        if (symbol > VK_SPACE  and (in_range(buffer, length))) {
+        if (symbol > VK_SPACE and (in_range(buffer, length))) {
             *ptr++ = symbol;
             if (replace == ' ') { putch(symbol); }
             else { putch(replace); }
         }
-    } while (symbol != VK_RETURN );
+    } while (symbol != VK_RETURN);
     *ptr = 0;
     return buffer;
 }
@@ -69,9 +74,9 @@ string UserInterface::Input(int x, int y, const char *length, char replace) {
 int UserInterface::StartMenu() {
     int flag = 0;
     int choice = 0;
-    AdvancedOutputToXY(0, 30, TurnAqua);
     DrawFrame(0, 0, 210, 53);
-    AdvancedOutputToXY(50, 10, TurnWhite, "WECLOME TO SUPER DUPER SYSTEM32 IN DATA BASE FOR ADMINS/CLIENTS/PEOPLE/GOLLUMS/WOMEN/DEMONS/GHOSTS/KURT COBAIN");
+    AdvancedOutputToXY(50, 10, TurnWhite,
+                       "WECLOME TO SUPER DUPER SYSTEM32 IN DATA BASE FOR ADMINS/CLIENTS/PEOPLE/GOLLUMS/WOMEN/DEMONS/GHOSTS/KURT COBAIN");
     AdvancedOutputToXY(50, 27, TurnBackGreen, "LOG IN");
     AdvancedOutputToXY(150, 27, TurnWhite, "EXIT");
     gotoxy(56, 27);
@@ -110,7 +115,7 @@ int UserInterface::StartMenu() {
 
 int UserInterface::AdminChoice() {
     string res = Input(145, 37, MAX_PASS, '*');
-    if (res == "-1") {return -1;}
+    if (res == "-1") { return -1; }
     if (res != AdminPsswrd) {
         AdvancedOutputToXY(145, 34, TurnRed, "WRONG PASSWORD");
         sleep_for(milliseconds(1200));
@@ -120,15 +125,19 @@ int UserInterface::AdminChoice() {
         return 0;
 
 
-
-    } else if(res==AdminPsswrd) {
+    } else if (res == AdminPsswrd) {
 
         int flagg = 0;
-        AdvancedOutputToXY(145, 39, TurnWhite, "log in to : "); TurnBackGreen; cout << "admin";
+        AdvancedOutputToXY(145, 39, TurnWhite, "log in to : ");
+        TurnBackGreen;
+        cout << "admin";
         AdvancedOutputToXY(145, 41, TurnWhite, "log in to : ");
-        TurnWhite; gotoxy(145, 41); cout << "log in to : server"; gotoxy(162, 39);
+        TurnWhite;
+        gotoxy(145, 41);
+        cout << "log in to : server";
+        gotoxy(162, 39);
 
-        for(;;) {
+        for (;;) {
             int Key = _getch();
             if (KeyCheck(Key) == "s") {
                 AdvancedOutputToXY(157, 39, TurnWhite, "admin");
@@ -142,7 +151,7 @@ int UserInterface::AdminChoice() {
             }
             if (flagg == 0 and KeyCheck(Key) == "enter") { //admin
                 return 1;
-            } else if (flagg == 1 and KeyCheck(Key)=="enter") { //server
+            } else if (flagg == 1 and KeyCheck(Key) == "enter") { //server
                 return 2;
             } else if (KeyCheck(Key) == "esc") {
                 return -1;
@@ -172,14 +181,16 @@ int UserInterface::LogMenu() {
             isAdmin = 0;
 
         } else if (isAdmin and KeyCheck(Key) == "enter") {
-            TurnAqua; DrawFrame(130, 29, 172, 43);
+            DrawFrame(130, 29, 172, 43);
             AdvancedOutputToXY(145, 32, TurnWhite, "ENTER PASSWORD");
             AdvancedOutputToXY(134, 37, "Password : ");
 
             for (;;) {
                 int res = AdminChoice();
                 if (res == -1) {
-                    TurnWhite; Clear(130, 29, 172, 43); gotoxy(155, 27);
+                    TurnWhite;
+                    Clear(130, 29, 172, 43);
+                    gotoxy(155, 27);
                     break;
                 } else if (res == 0) {
                     continue;
@@ -191,10 +202,9 @@ int UserInterface::LogMenu() {
                     return -1;
                 }
             }
-        }
-        else if (!isAdmin and KeyCheck(Key) == "enter") {
+        } else if (!isAdmin and KeyCheck(Key) == "enter") {
             int LoginFlag = 1;
-            TurnAqua; DrawFrame(42, 29, 61, 35);
+            DrawFrame(42, 29, 61, 35);
 
             AdvancedOutputToXY(48, 33, TurnWhite, "REGISTER");
             AdvancedOutputToXY(48, 31, TurnBackGreen, "LOGGIN");
@@ -209,16 +219,13 @@ int UserInterface::LogMenu() {
                     AdvancedOutputToXY(48, 33, TurnWhite, "REGISTER");
                     AdvancedOutputToXY(48, 31, TurnBackGreen, "LOGGIN");
                     LoginFlag = 1;
-                }
-                else if(KeyCheck(key)=="esc"){
+                } else if (KeyCheck(key) == "esc") {
                     Clear(42, 29, 61, 35);
                     gotoxy(54, 27);
                     break;
-                }
-
-                else if (LoginFlag and KeyCheck(key) == "enter") {
+                } else if (LoginFlag and KeyCheck(key) == "enter") {
                     Clear(42, 29, 61, 35);
-                    TurnAqua; DrawFrame(10, 29, 100, 39);
+                    DrawFrame(10, 29, 100, 39);
                     AdvancedOutputToXY(52, 30, TurnWhite, "LOGIN");
                     AdvancedOutputToXY(15, 32, "Name: ");
                     AdvancedOutputToXY(15, 36, "Password: ");
@@ -235,20 +242,20 @@ int UserInterface::LogMenu() {
                         Clear(10, 29, 100, 39);
                         gotoxy(54, 27);
                         break;
-                    } else {system("cls");}
+                    } else { system("cls"); }
                     //if (Database::FindUser(LoginResult, PasswordResult)) { return to main }
 
 
 
                 } else if (!LoginFlag and KeyCheck(key) == "enter") {
                     Clear(42, 29, 61, 35);
-                    TurnAqua; DrawFrame(10, 29, 100, 43);
+                    DrawFrame(10, 29, 100, 43);
                     AdvancedOutputToXY(50, 30, TurnWhite, "REGISTRATION");
                     AdvancedOutputToXY(13, 33, "Enter your name : ");
                     AdvancedOutputToXY(13, 36, "Create password : ");
                     AdvancedOutputToXY(13, 39, "Repeat password : ");
 
-                    for(;;) {
+                    for (;;) {
                         string RegLoginResult = Input(31, 33, MAX_LOGIN, ' ');
                         if (RegLoginResult == "-1") {
                             Clear(10, 29, 100, 43);
@@ -267,9 +274,9 @@ int UserInterface::LogMenu() {
                             gotoxy(54, 27);
                             break;
                         }
-                        if(RegPassResult==RegPassCheckResult) {
+                        if (RegPassResult == RegPassCheckResult) {
                             //Database::AddUser(RegLoginResult, RegPassResult); return to login menu;
-                        } else if (RegPassResult!=RegPassCheckResult) {
+                        } else if (RegPassResult != RegPassCheckResult) {
                             AdvancedOutputToXY(50, 41, TurnRed, "PASSWORDS MISMATCH");
                             sleep_for(milliseconds(1200));
                             TurnWhite;
@@ -288,31 +295,49 @@ int UserInterface::LogMenu() {
 void UserInterface::MainMenu() {
     //admin
 //if(LogMenu()==-2){
+    int Selector = 0;
     system("cls");
-    TurnAqua;
     DrawFrame(0, 0, 210, 53);
-    TurnWhite;
-    gotoxy(20,4);
-    cout<<"CHOSE THE DATE";
-    TurnBackGreen;
-    gotoxy(25,17);
-    cout<<"05.05";
-    TurnWhite;
-    gotoxy(25,24);
-    cout<<"06.06";
-    TurnWhite;
-    gotoxy(25,31);
-    cout<<"07.07";
-    gotoxy(30,17);
-
-
-//}
-
-
-
-
-
-
+    AdvancedOutputToXY(20, 11, TurnWhite, "CHOSE THE DATE");
+    AdvancedOutputToXY(25, 26, TurnBackGreen, Date[Selector]);
+    AdvancedOutputToXY(25, 36, TurnWhite, Date[Selector + 1]);
+    AdvancedOutputToXY(25, 46, TurnWhite, Date[Selector + 2]);
+    gotoxy(30, 26);
+    int CurrentY = 26;
+    int X = 25;
+    for (;;) {
+        int Key = _getch();
+        if (KeyCheck(Key) == "s" and CurrentY != 46) {
+            Selector++;
+            AdvancedOutputToXY(X, CurrentY, TurnWhite, Date[Selector - 1]);
+            CurrentY += 10;
+            AdvancedOutputToXY(X, CurrentY, TurnBackGreen, Date[Selector]);
+            AdvancedOutputToXY(0, 0, TurnRed, Selector);
+            AdvancedOutputToXY(0, 1, TurnRed, CurrentY);
+        } else if (KeyCheck(Key) == "s" and CurrentY == 46 and Selector<6) {
+            Selector++;
+            AdvancedOutputToXY(X, CurrentY, TurnBackGreen, Date[Selector]);
+            AdvancedOutputToXY(X,CurrentY-10,TurnWhite,Date[Selector-1]);
+            AdvancedOutputToXY(X,CurrentY-20,TurnWhite,Date[Selector-2]);
+            AdvancedOutputToXY(0, 0, TurnRed, Selector);
+            AdvancedOutputToXY(0, 1, TurnRed, CurrentY);
+        }else if (KeyCheck(Key)=="w" and CurrentY!=26){
+            Selector--;
+            CurrentY-=10;
+            AdvancedOutputToXY(X,CurrentY,TurnBackGreen,Date[Selector]);
+            AdvancedOutputToXY(X,CurrentY+10,TurnWhite,Date[Selector+1]);
+            AdvancedOutputToXY(0, 0, TurnRed, Selector);
+            AdvancedOutputToXY(0, 1, TurnRed, CurrentY);
+        }else if (KeyCheck(Key)=="w" and CurrentY==26 and Selector!=0){
+            Selector--;
+            AdvancedOutputToXY(X,CurrentY,TurnBackGreen,Date[Selector]);
+            AdvancedOutputToXY(X,CurrentY+10,TurnWhite,Date[Selector+1]);
+            AdvancedOutputToXY(X,CurrentY+20,TurnWhite,Date[Selector+2]);
+            AdvancedOutputToXY(0, 0, TurnRed, Selector);
+            AdvancedOutputToXY(0, 1, TurnRed, CurrentY);
+        }
+    }
 }
+
 
 
