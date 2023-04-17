@@ -1,6 +1,5 @@
 #include "Utility.h"
 
-
 void gotoxy(int x, int y)
 {
     COORD coord;
@@ -35,11 +34,26 @@ string KeyCheck(int Key) {
     if (Key == 'e' or Key == 'E' or Key == 227 or Key == 147) {
         return "e";
     }
-    if (Key == 27) {
+    if (Key == VK_ESCAPE) {
         return "esc";
     }
-    if(Key == 9){
+    if(Key == VK_TAB){
         return "tab";
-    }
+    } else {return "NONE";}
 }
 
+
+void AdvancedOutputToXY(int x, int y, string str, WINBOOL Color) {
+    gotoxy(x, y);
+    cout << str;
+}
+void AdvancedOutputToXY(int x, int y, WINBOOL Color,  string str) { //overload
+    AdvancedOutputToXY(x, y, str, Color);
+}
+
+
+
+bool in_range(char *buff, const char *max) {
+    int lb = strlen(buff), lm = strlen(max);
+    return (lb != lm) ? (lb < lm) : strcmp(max, buff) >= 0;
+}
