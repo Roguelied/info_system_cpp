@@ -45,8 +45,7 @@ int main() {
         switch(_stateMenu){
             case 1:
                 system("cls");
-                if (_size != 0)
-                    DataEntry(d, _size);
+                DataEntry(d, _size);
                 system("pause");
                 system("cls");
                 Menu();
