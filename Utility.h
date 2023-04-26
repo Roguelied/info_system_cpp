@@ -46,6 +46,11 @@
 
 #define MAX_PASS   "4294967295"
 #define MAX_LOGIN   "1111111111111111111111111111111111111111111111111"
+#define  Loggin "admin";
+#define  Psswrd  "admin";
+
+
+
 
 using namespace std::this_thread;
 using namespace std::chrono;

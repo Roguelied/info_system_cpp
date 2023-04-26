@@ -46,13 +46,16 @@ string KeyCheck(int Key) {
 void AdvancedOutputToXY(int x, int y, string str, WINBOOL Color) {
     gotoxy(x, y);
     cout << str;
+    TurnWhite;
 }
 void AdvancedOutputToXY(int x, int y, WINBOOL Color,  string str) { //overload
     AdvancedOutputToXY(x, y, str, Color);
+    TurnWhite;
 }
 void AdvancedOutputToXY(int x, int y, WINBOOL Color,  int num) { //overload
     gotoxy(x, y);
     cout << num;
+    TurnWhite;
 }
 
 
