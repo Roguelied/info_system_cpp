@@ -44,13 +44,8 @@
 #define VK_F12	0x7B
 #define VK_DELETE	0x2E
 
-#define MAX_PASS   "4294967295"
+#define MAX_PASS   "11111111111"
 #define MAX_LOGIN   "1111111111111111111111111111111111111111111111111"
-#define  Loggin "admin";
-#define  Psswrd  "admin";
-
-
-
 
 using namespace std::this_thread;
 using namespace std::chrono;

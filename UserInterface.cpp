@@ -4,6 +4,9 @@
 
 string UserInterface::AdminPsswrd = "admin";
 string UserInterface::AdminLoggin = "admin";
+string UserInterface::ServerPsswrd = "server_";
+string UserInterface::ServerLoggin = "server_";
+
 vector<string> UserInterface::Date{"01.01", "20.04", "12.05", "10.06", "09.07", "09.11", "19.11"};
 
 /*============================================TOOL FUNCTIONS==============================================================
@@ -105,13 +108,13 @@ int UserInterface::StartMenu() {
 }
 
 int UserInterface::LogMenu() {
-    int isAdmin = 0;
+    int isServer = 0;
     int couter = 5;
     int CurrentX = 100;
     AdvancedOutputToXY(0, 30, TurnAqua);
     DrawFrame(0, 0, 210, 53);
     AdvancedOutputToXY(99, 10, TurnWhite, "WHO ARE YOU");
-    AdvancedOutputToXY(CurrentX + 50, 27, "ADMIN");
+    AdvancedOutputToXY(CurrentX + 50, 27, "SERVER");
     AdvancedOutputToXY(CurrentX, 40, TurnWhite, "EXIT");
     AdvancedOutputToXY(CurrentX - 50, 27, TurnBackGreen, "USER");
     while (true) {
@@ -120,55 +123,55 @@ int UserInterface::LogMenu() {
             if ((couter + 1) % 3 == 0) {
                 AdvancedOutputToXY(CurrentX - 50, 27, TurnWhite, "USER");
                 AdvancedOutputToXY(CurrentX, 40, TurnWhite, "EXIT");
-                AdvancedOutputToXY(CurrentX + 50, 27, TurnBackGreen, "ADMIN");
+                AdvancedOutputToXY(CurrentX + 50, 27, TurnBackGreen, "SERVER");
                 couter++;
-                isAdmin = 1;
+                isServer = 1;
             } else if (couter % 3 == 0) {
                 AdvancedOutputToXY(CurrentX - 50, 27, TurnWhite, "USER");
-                AdvancedOutputToXY(CurrentX + 50, 27, TurnWhite, "ADMIN");
+                AdvancedOutputToXY(CurrentX + 50, 27, TurnWhite, "SERVER");
                 AdvancedOutputToXY(CurrentX, 40, TurnBackGreen, "EXIT");
                 couter++;
             } else if ((couter + 2) % 3 == 0) {
-                AdvancedOutputToXY(CurrentX + 50, 27, TurnWhite, "ADMIN");
+                AdvancedOutputToXY(CurrentX + 50, 27, TurnWhite, "SERVER");
                 AdvancedOutputToXY(CurrentX, 40, TurnWhite, "EXIT");
                 AdvancedOutputToXY(CurrentX - 50, 27, TurnBackGreen, "USER");
                 couter++;
-                isAdmin = 0;
+                isServer = 0;
             }
         } else if (KeyCheck(Key) == "enter" and (couter + 2) % 3 == 0) {
             exit(0);
-        } else if (isAdmin and KeyCheck(Key) == "enter") {
+        } else if (isServer and KeyCheck(Key) == "enter") {
             while (1) {
                 DrawFrame(108, 29, 198, 39);
-                AdvancedOutputToXY(145, 30, TurnWhite, "LOGIN FOR ADMIN");
+                AdvancedOutputToXY(145, 30, TurnWhite, "LOGIN FOR SERVER");
                 AdvancedOutputToXY(113, 32, "Name : ");
                 AdvancedOutputToXY(113, 36, "Password : ");
-                string AdminLog = Input(120, 32, MAX_LOGIN, ' ');
-                if (AdminLog == "-1") {
+                string ServerLog = Input(120, 32, MAX_LOGIN, ' ');
+                if (ServerLog == "-1") {
                     Clear(108, 29, 198, 39);
                     gotoxy(155, 27);
                     break;
                 }
-                string AdminPas = Input(124, 36, MAX_PASS, '*');
-                if (AdminPas == "-1") {
+                string ServerPas = Input(124, 36, MAX_PASS, '*');
+                if (ServerPas == "-1") {
                     Clear(108, 29, 198, 39);
                     gotoxy(155, 27);
                     break;
                 }
                 if (KeyCheck(Key) == "enter" and
-                    (AdminLog == UserInterface::AdminLoggin and AdminPas == UserInterface::AdminPsswrd)) {
+                    (ServerLog == UserInterface::ServerLoggin and ServerPas == UserInterface::ServerPsswrd)) {
                     system("cls");
-                    PersonalAdminArea();                                                                                  //admin=1
+                    exit(6);                                                                                 //admin=1
                 }
                 if (KeyCheck(Key) == "enter" and
-                    (AdminLog != UserInterface::AdminLoggin or AdminPas != UserInterface::AdminPsswrd)) {
+                    (ServerLog != UserInterface::ServerLoggin or ServerPas != UserInterface::ServerPsswrd)) {
                     AdvancedOutputToXY(150, 38, TurnRed, "PASSWORDS MISMATCH");
                     sleep_for(milliseconds(1200));
                     Clear(108, 29, 198, 39);
                     continue;
                 }
             }
-        } else if (!isAdmin and KeyCheck(Key) == "enter") {
+        } else if (!isServer and KeyCheck(Key) == "enter") {
             int LoginFlag = 2;
             DrawFrame(42, 29, 61, 35);
             AdvancedOutputToXY(48, 33, TurnWhite, "REGISTER");
@@ -204,7 +207,12 @@ int UserInterface::LogMenu() {
                         Clear(10, 29, 100, 39);
                         gotoxy(54, 27);
                         break;
-                    } else {
+                    }
+                    else if(PasswordResult==AdminPsswrd and LoginResult==AdminLoggin){
+                        system("cls");
+                        PersonalAdminArea();
+                    }
+                    else {
                         system("cls");
                         exit(1);
                     }
@@ -295,7 +303,6 @@ string UserInterface::DateChoice() {
         }
     }
 }
-
 void UserInterface::PersonalAdminArea() {
     int selector = 7;
     DrawFrame(0, 0, 210, 53);
@@ -313,61 +320,37 @@ void UserInterface::PersonalAdminArea() {
         if (KeyCheck(Key) == "tab" and (selector + 5) % 6 == 0) {
             AdvancedOutputToXY(10, 18, TurnWhite, "Check User Info");
             AdvancedOutputToXY(10, 21, TurnBackGreen, "Add User");
-            AdvancedOutputToXY(10, 24, TurnWhite, "Delete User");
-            AdvancedOutputToXY(10, 27, TurnWhite, "Add Booking");
-            AdvancedOutputToXY(10, 30, TurnWhite, "Delete Booking");
-            AdvancedOutputToXY(10, 33, TurnWhite, "Sort Database");
-            gotoxy(18, 21);
             selector++;
         } else if (KeyCheck(Key) == "tab" and (selector + 4) % 6 == 0) {
-            AdvancedOutputToXY(10, 18, TurnWhite, "Check User Info");
             AdvancedOutputToXY(10, 21, TurnWhite, "Add User");
             AdvancedOutputToXY(10, 24, TurnBackGreen, "Delete User");
-            AdvancedOutputToXY(10, 27, TurnWhite, "Add Booking");
-            AdvancedOutputToXY(10, 30, TurnWhite, "Delete Booking");
-            AdvancedOutputToXY(10, 33, TurnWhite, "Sort Database");
-            gotoxy(21, 24);
             selector++;
         } else if (KeyCheck(Key) == "tab" and (selector + 3) % 6 == 0) {
-            AdvancedOutputToXY(10, 18, TurnWhite, "Check User Info");
-            AdvancedOutputToXY(10, 21, TurnWhite, "Add User");
             AdvancedOutputToXY(10, 24, TurnWhite, "Delete User");
             AdvancedOutputToXY(10, 27, TurnBackGreen, "Add Booking");
-            AdvancedOutputToXY(10, 30, TurnWhite, "Delete Booking");
-            AdvancedOutputToXY(10, 33, TurnWhite, "Sort Database");
             gotoxy(21, 27);
             selector++;
         } else if (KeyCheck(Key) == "tab" and (selector + 2) % 6 == 0) {
-            AdvancedOutputToXY(10, 18, TurnWhite, "Check User Info");
-            AdvancedOutputToXY(10, 21, TurnWhite, "Add User");
-            AdvancedOutputToXY(10, 24, TurnWhite, "Delete User");
             AdvancedOutputToXY(10, 27, TurnWhite, "Add Booking");
             AdvancedOutputToXY(10, 30, TurnBackGreen, "Delete Booking");
-            AdvancedOutputToXY(10, 33, TurnWhite, "Sort Database");
             gotoxy(24, 30);
             selector++;
         } else if (KeyCheck(Key) == "tab" and (selector + 1) % 6 == 0) {
-            AdvancedOutputToXY(10, 18, TurnWhite, "Check User Info");
-            AdvancedOutputToXY(10, 21, TurnWhite, "Add User");
-            AdvancedOutputToXY(10, 24, TurnWhite, "Delete User");
-            AdvancedOutputToXY(10, 27, TurnWhite, "Add Booking");
             AdvancedOutputToXY(10, 30, TurnWhite, "Delete Booking");
             AdvancedOutputToXY(10, 33, TurnBackGreen, "Sort Database");
             gotoxy(23, 33);
             selector++;
         } else if (KeyCheck(Key) == "tab" and selector % 6 == 0) {
-            AdvancedOutputToXY(10, 21, TurnWhite, "Add User");
-            AdvancedOutputToXY(10, 24, TurnWhite, "Delete User");
-            AdvancedOutputToXY(10, 27, TurnWhite, "Add Booking");
-            AdvancedOutputToXY(10, 30, TurnWhite, "Delete Booking");
             AdvancedOutputToXY(10, 33, TurnWhite, "Sort Database");
             AdvancedOutputToXY(10, 18, TurnBackGreen, "Check User Info");
             selector++;
         } else if (KeyCheck(Key) == "enter" and (selector + 5) % 6 == 0) {
             DateChoice();
+        } else if (KeyCheck(Key)=="enter"){
+            continue;
         }
     }
-};
+}
 
 
 
