@@ -1,9 +1,6 @@
 #include "Utility.h"
-#include "Server.h"
 #include "Client.h"
-#include "Database.h"
 #include "UserInterface.h"
-#include "Functions_Database.h"
 
 string UserInterface::AdminPsswrd = "admin";
 int _stateMenu;
@@ -24,105 +21,12 @@ void Menu(){
 int main() {
     InitializeSettings();
 
-    Booking::RegUser("123123", "123123");
+    //Booking::RegUser("123123", "123123");
 //    UserInterface::StartMenu();
 //    UserInterface::LogMenu();
 //    UserInterface::MainMenu();
-    wait;
+    //wait;
 
-    /*
-    Booking Booking;
-    Booking.SaveCustomer(Booking); */
-
-    Menu();
-    int _actions;
-    string fileName;
-
-    int _size = 0;
-    Data* d = new Data[_size];
-
-    while(_stateMenu != 0){
-        switch(_stateMenu){
-            case 1:
-                system("cls");
-                DataEntry(d, _size);
-                system("pause");
-                system("cls");
-                Menu();
-                break;
-            case 2:
-                system("cls");
-
-                if (_size != 0)
-                    Print(d, _size);
-                else
-                    cout << "Данные пусты!" << endl;
-                system("pause");
-                system("cls");
-                Menu();
-                break;
-            case 3:
-                system("cls");
-
-                if (_size != 0)
-                    DataChange(d, _size);
-                else
-                    cout << "Данные пусты!" << endl;
-                system("pause");
-                system("cls");
-                Menu();
-                break;
-            case 4:
-                system("cls");
-                if (_size != 0)
-                    AddData(d, _size);
-                else
-                    cout << "Данные пусты!" << endl;
-                system("pause");
-                system("cls");
-                Menu();
-                break;
-            case 5:
-                system("cls");
-                if (_size != 0)
-                    DeleteData(d, _size);
-                else
-                    cout << "Данные пусты!" << endl;
-                system("pause");
-                system("cls");
-                Menu();
-                break;
-            case 6:
-                system("cls");
-                if (_size != 0)
-                    SortingData(d, _size);
-                else
-                    cout << "Данные пусты!" << endl;
-                system("pause");
-                system("cls");
-                Menu();
-                break;
-            case 7:
-                system("cls");
-                if (_size != 0)
-                    SaveData(d, _size, "../Out.txt");
-                else
-                    cout << "Данные пусты!" << endl;
-                system("pause");
-                system("cls");
-                Menu();
-                break;
-            default:
-                cout << "Пункт меню введ не верно!" << endl;
-                system("cls");
-                Menu();
-                break;
-        }
-    }
-
-    system("cls");
-    cout << "Работа завершена!" << endl;
-    system("pause");
 
 }
 
