@@ -44,7 +44,7 @@
 #define VK_F12	0x7B
 #define VK_DELETE	0x2E
 
-#define MAX_PASS   "4294967295"
+#define MAX_PASS   "11111111111"
 #define MAX_LOGIN   "1111111111111111111111111111111111111111111111111"
 
 using namespace std::this_thread;
@@ -58,5 +58,5 @@ bool in_range(char *buff, const char *max);
 
 void AdvancedOutputToXY(int x, int y, string str = "", WINBOOL Color = TurnWhite);
 void AdvancedOutputToXY(int x, int y, WINBOOL Color = TRUE,  string str = "");
-
+void AdvancedOutputToXY(int x, int y, WINBOOL Color,  int num);
 #endif //INFO_SYSTEM_CPP_UTILITY_H
