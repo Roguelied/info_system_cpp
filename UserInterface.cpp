@@ -6,12 +6,10 @@ string UserInterface::AdminPsswrd = "admin";
 string UserInterface::AdminLoggin = "admin";
 string UserInterface::ServerPsswrd = "server_";
 string UserInterface::ServerLoggin = "server_";
-
 vector<string> UserInterface::Date{"01.01", "20.04", "12.05", "10.06", "09.07", "09.11", "19.11"};
 
 /*============================================TOOL FUNCTIONS==============================================================
 ========================================================================================================================*/
-
 void UserInterface::DrawFrame(int x1, int y1, int x2, int y2) {
     TurnAqua;
     for (int i = x1; i < x2 + 1; i++) {
@@ -38,7 +36,6 @@ void UserInterface::Clear(int x1, int y1, int x2, int y2) {
 }
 
 string UserInterface::Input(int x, int y, const char *length, char replace) {
-
     char buffer[128] = {0};
     char *ptr = buffer;
     unsigned char symbol;
@@ -73,10 +70,8 @@ string UserInterface::Input(int x, int y, const char *length, char replace) {
     return buffer;
 }
 
-
 /*================================================MENU LOGIC FUNCTIONS==================================================
 ========================================================================================================================*/
-
 int UserInterface::StartMenu() {
     int choice = 0;
     int select = 2;
@@ -207,12 +202,10 @@ int UserInterface::LogMenu() {
                         Clear(10, 29, 100, 39);
                         gotoxy(54, 27);
                         break;
-                    }
-                    else if(PasswordResult==AdminPsswrd and LoginResult==AdminLoggin){
+                    } else if (PasswordResult == AdminPsswrd and LoginResult == AdminLoggin) {
                         system("cls");
                         PersonalAdminArea();
-                    }
-                    else {
+                    } else {
                         system("cls");
                         exit(1);
                     }
@@ -296,17 +289,19 @@ string UserInterface::DateChoice() {
             gotoxy(CurrentX + 5, CurrentY);
         } else if (KeyCheck(Key) == "esc") {
             Clear(40, 8, 60, 30);
-            gotoxy(25,18);
+            gotoxy(25, 18);
             break;
-        } else if(KeyCheck(Key)=="enter"){
+        } else if (KeyCheck(Key) == "enter") {
             exit(5);
         }
     }
+    return "";
 }
+
 void UserInterface::PersonalAdminArea() {
     int selector = 7;
     DrawFrame(0, 0, 210, 53);
-    AdvancedOutputToXY(175, 8,  "Person Info");
+    AdvancedOutputToXY(175, 8, "Person Info");
     AdvancedOutputToXY(175, 12, "Login : admin");
     AdvancedOutputToXY(10, 11, TurnWhite, "Admin`s Functions");
     AdvancedOutputToXY(10, 21, TurnWhite, "Add User");
@@ -346,11 +341,29 @@ void UserInterface::PersonalAdminArea() {
             selector++;
         } else if (KeyCheck(Key) == "enter" and (selector + 5) % 6 == 0) {
             DateChoice();
-        } else if (KeyCheck(Key)=="enter"){
+        } else if (KeyCheck(Key) == "enter") {
             continue;
         }
     }
 }
 
+void ButtonCammon(int x, int y, WINBOOL Color, string str) {
+    gotoxy(x, y);
+    cout << str;
+    TurnWhite;
+}
+
+void FunctionForExit() {
+    abort();
+}
 
 
+void Logic() {
+//startscreen
+    Button Exit;
+    Exit.ButtonCammon(10, 10, TurnRed, "Exit");
+    Exit.OnClick(*FunctionForExit);
+    int Key = _getch();
+    if (KeyCheck(Key) == "enter")
+        Exit.Executor();
+}

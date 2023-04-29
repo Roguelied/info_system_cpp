@@ -4,6 +4,8 @@
 #include "Utility.h"
 
 
+void Logic();
+
 class Button;
 
 class UserInterface {
@@ -13,7 +15,6 @@ private:
     static string AdminPsswrd;
     static string ServerPsswrd;
     static string ServerLoggin;
-
     static vector <string> Date;
 public:
     static void DrawFrame(int x1,int y1,int x2,int y2);
@@ -27,16 +28,16 @@ public:
 
 };
 
-
 class Button : public UserInterface {
-private:
-    vector<void*> Functions;
 public:
-    Button(int x1, int y1, int x2, int y2) {
+    static void (*FuncB)();
+    static void OnClick(void (*FuncA)()){
+        FuncB = FuncA;
     }
-
-
-
+    static void Executor(){
+        FuncB();
+    }
+    static void ButtonCammon(int x, int y,WINBOOL Color,string str){};
 
 };
 
