@@ -6,7 +6,7 @@ string UserInterface::AdminPsswrd = "admin";
 string UserInterface::AdminLoggin = "admin";
 string UserInterface::ServerPsswrd = "server_";
 string UserInterface::ServerLoggin = "server_";
-
+vector<Button> UserInterface::Buttons = {};
 vector<string> UserInterface::Date{"01.01", "20.04", "12.05", "10.06", "09.07", "09.11", "19.11"};
 
 /*============================================TOOL FUNCTIONS==============================================================
@@ -352,5 +352,18 @@ void UserInterface::PersonalAdminArea() {
     }
 }
 
+void UserInterface::SelectionMode() {
+
+}
+
+void UserInterface::AddButton(Button Button) {
+    Buttons.push_back(Button);
+}
+
+Button::Button(int x1, int y1, int x2, int y2, function<string(int, int, const char*, char)> Function) {
+    DrawFrame(x1, y1, x2, y2);
+    Container = Function;
+    UserInterface::AddButton(*this);
+}
 
 
