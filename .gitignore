@@ -3,5 +3,3 @@
 /cmake-build-release/
 .idea
 .vscode
-launch.json
-tasks.json
