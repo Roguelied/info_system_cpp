@@ -77,34 +77,15 @@ string UserInterface::Input(int x, int y, const char *length, char replace) {
 /*================================================MENU LOGIC FUNCTIONS==================================================
 ========================================================================================================================*/
 
-int UserInterface::StartMenu() {
-    int choice = 0;
-    int select = 2;
+void UserInterface::StartMenu() {
     DrawFrame(0, 0, 210, 53);
     AdvancedOutputToXY(50, 10, TurnWhite,
                        "WECLOME TO SUPER DUPER SYSTEM32 IN DATA BASE FOR ADMINS/CLIENTS/PEOPLE/GOLLUMS/WOMEN/DEMONS/GHOSTS/KURT COBAIN");
-    AdvancedOutputToXY(150, 27, TurnWhite, "EXIT");
-    AdvancedOutputToXY(50, 27, TurnBackGreen, "LOG IN");
-    while (true) {
-        int Key = _getch();
-        if (KeyCheck(Key) == "tab" and select % 2 == 0) {
-            AdvancedOutputToXY(50, 27, TurnWhite, "LOG IN");
-            AdvancedOutputToXY(150, 27, TurnBackGreen, "EXIT");
-            select++;
-        } else if (KeyCheck(Key) == "tab" and (select + 1) % 2 == 0) {
-            AdvancedOutputToXY(150, 27, TurnWhite, "EXIT");
-            AdvancedOutputToXY(50, 27, TurnBackGreen, "LOG IN");
-            select++;
-        }
-        //}
-        if (select % 2 == 0 and KeyCheck(Key) == "enter") {
-            system("cls");
-            LogMenu();
-        } else if ((select + 1) % 2 == 0 and KeyCheck(Key) == "enter") {
-            exit(0);
-        }
-        sleep_for(milliseconds(100));
-    }
+    Button Enter(50, 27, "ENTER", UserInterface::Press);
+    Button Exit(150, 27, "EXIT", UserInterface::Press);
+    UserInterface::SelectionMode();
+    UserInterface::DeleteButtons();
+    LogMenu();
 }
 
 int UserInterface::LogMenu() {
@@ -139,7 +120,7 @@ int UserInterface::LogMenu() {
                 isServer = 0;
             }
         } else if (KeyCheck(Key) == "enter" and (couter + 2) % 3 == 0) {
-            exit(0);
+            exit(666);
         } else if (isServer and KeyCheck(Key) == "enter") {
             while (1) {
                 DrawFrame(108, 29, 198, 39);
@@ -149,19 +130,19 @@ int UserInterface::LogMenu() {
                 string ServerLog = Input(120, 32, MAX_LOGIN, ' ');
                 if (ServerLog == "-1") {
                     Clear(108, 29, 198, 39);
-                    gotoxy(155, 27);
+                    gotoxy(156, 27);
                     break;
                 }
                 string ServerPas = Input(124, 36, MAX_PASS, '*');
                 if (ServerPas == "-1") {
                     Clear(108, 29, 198, 39);
-                    gotoxy(155, 27);
+                    gotoxy(156, 27);
                     break;
                 }
                 if (KeyCheck(Key) == "enter" and
                     (ServerLog == UserInterface::ServerLoggin and ServerPas == UserInterface::ServerPsswrd)) {
                     system("cls");
-                    exit(6);                                                                                 //admin=1
+                    return 1;                                                                                 //server=1
                 }
                 if (KeyCheck(Key) == "enter" and
                     (ServerLog != UserInterface::ServerLoggin or ServerPas != UserInterface::ServerPsswrd)) {
@@ -207,12 +188,10 @@ int UserInterface::LogMenu() {
                         Clear(10, 29, 100, 39);
                         gotoxy(54, 27);
                         break;
-                    }
-                    else if(PasswordResult==AdminPsswrd and LoginResult==AdminLoggin){
+                    } else if (PasswordResult == AdminPsswrd and LoginResult == AdminLoggin) {
                         system("cls");
                         PersonalAdminArea();
-                    }
-                    else {
+                    } else {
                         system("cls");
                         exit(1);
                     }
@@ -296,17 +275,18 @@ string UserInterface::DateChoice() {
             gotoxy(CurrentX + 5, CurrentY);
         } else if (KeyCheck(Key) == "esc") {
             Clear(40, 8, 60, 30);
-            gotoxy(25,18);
+            gotoxy(25, 18);
             break;
-        } else if(KeyCheck(Key)=="enter"){
+        } else if (KeyCheck(Key) == "enter") {
             exit(5);
         }
     }
 }
+
 void UserInterface::PersonalAdminArea() {
     int selector = 7;
     DrawFrame(0, 0, 210, 53);
-    AdvancedOutputToXY(175, 8,  "Person Info");
+    AdvancedOutputToXY(175, 8, "Person Info");
     AdvancedOutputToXY(175, 12, "Login : admin");
     AdvancedOutputToXY(10, 11, TurnWhite, "Admin`s Functions");
     AdvancedOutputToXY(10, 21, TurnWhite, "Add User");
@@ -346,24 +326,87 @@ void UserInterface::PersonalAdminArea() {
             selector++;
         } else if (KeyCheck(Key) == "enter" and (selector + 5) % 6 == 0) {
             DateChoice();
-        } else if (KeyCheck(Key)=="enter"){
+        } else if (KeyCheck(Key) == "enter") {
+            continue;
+        }
+    }
+}
+//**********************************************************************************************************************
+int UserInterface::Press() {
+    return 0;
+}
+
+
+int UserInterface::SelectionMode() {
+    int SizeVec= size (Buttons);
+    int flagEBYCHIU=0;
+    AdvancedOutputToXY(Buttons[flagEBYCHIU].x1,Buttons[flagEBYCHIU].y1,TurnBackGreen,Buttons[flagEBYCHIU].Text);
+    for(;;){
+        int Key=_getch();
+        if(KeyCheck(Key)=="tab"){
+            if(flagEBYCHIU!=SizeVec-1){
+                AdvancedOutputToXY(Buttons[flagEBYCHIU].x1,Buttons[flagEBYCHIU].y1,TurnWhite,Buttons[flagEBYCHIU].Text);
+                flagEBYCHIU++;
+                AdvancedOutputToXY(Buttons[flagEBYCHIU].x1,Buttons[flagEBYCHIU].y1,TurnBackGreen,Buttons[flagEBYCHIU].Text);
+            } else{
+                AdvancedOutputToXY(Buttons[flagEBYCHIU].x1,Buttons[flagEBYCHIU].y1,TurnWhite,Buttons[flagEBYCHIU].Text);
+                flagEBYCHIU=0;
+                AdvancedOutputToXY(Buttons[flagEBYCHIU].x1,Buttons[flagEBYCHIU].y1,TurnBackGreen,Buttons[flagEBYCHIU].Text);
+            }
+        }if(KeyCheck(Key)=="enter" and flagEBYCHIU!=SizeVec-1){
+            Buttons[flagEBYCHIU].Action();
+            system("cls");
+            break;
+        }else if(KeyCheck(Key)=="enter" and flagEBYCHIU==SizeVec-1){
+            exit(999);
+        } else if (KeyCheck(Key)=="esc") {
             continue;
         }
     }
 }
 
-void UserInterface::SelectionMode() {
-
-}
-
 void UserInterface::AddButton(Button Button) {
     Buttons.push_back(Button);
 }
+void UserInterface::DeleteButtons() {
+    Buttons.clear();
+}
 
-Button::Button(int x1, int y1, int x2, int y2, function<string(int, int, const char*, char)> Function) {
-    DrawFrame(x1, y1, x2, y2);
+Button::Button(int x1, int y1, string Text, ::function<string(int, int, const char *, char)> Function) {
+    this->Text = Text;
+    this->x1=x1;
+    this->y1=y1;
+    gotoxy(x1, y1);
+    cout << Text;
     Container = Function;
     UserInterface::AddButton(*this);
 }
+
+Button::Button(int x1, int y1, string Text, ::function<void(int, int)> Function) {
+    this->Text = Text;
+    this->x1=x1;
+    this->y1=y1;
+    gotoxy(x1, y1);
+    cout << Text;
+    Container1 = Function;
+    UserInterface::AddButton(*this);
+}
+
+Button::Button(int x1, int y1, string Text, ::function<void()> Function) {
+    this->Text = Text;
+    this->x1=x1;
+    this->y1=y1;
+    gotoxy(x1, y1);
+    cout << Text;
+    Container2 = Function;
+    UserInterface::AddButton(*this);
+}
+
+
+
+
+
+
+
 
 
