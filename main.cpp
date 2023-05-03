@@ -14,8 +14,6 @@ string jopa(int x) {
 
 int main() {
     InitializeSettings();
-    Button btn1(10, 10, 20, 20, UserInterface::Input);
-    btn1.Action(11, 11, MAX_LOGIN, '*');
-    wait;
+    UserInterface::StartMenu();
 }
 
