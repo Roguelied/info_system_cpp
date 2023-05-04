@@ -13,7 +13,13 @@ string jopa(int x) {
 }
 
 int main() {
-    InitializeSettings();
-    UserInterface::StartMenu();
+    //InitializeSettings();
+    Client::Initialize();
+    Client::AskServer("DEL 22");
+    Client::AskServer("DEL 44");
+    Client::AskServer("FND LoginTest%PassTest%");
+    Client::AskServer("REG NewLogin%NewPassw%");
+    Client::CloseConnection();
+    wait;
 }
 

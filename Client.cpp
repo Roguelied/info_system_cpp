@@ -1,5 +1,11 @@
 #include "Client.h"
 
+WSADATA Client::wsaData;
+ADDRINFO Client::hints;
+ADDRINFO* Client::addrResult = NULL;
+SOCKET Client::ConnectSocket = INVALID_SOCKET;
+char Client::SendBuffer[64];
+char Client::recvBuffer[512];
 
 int Client::Initialize() {
     int Result;
@@ -34,41 +40,55 @@ int Client::Initialize() {
         return 1;
     }
 
-    Result = connect(ConnectSocket, addrResult->ai_addr, (int)addrResult->ai_addrlen);
-
-    if (Result == SOCKET_ERROR) {
-        cout << "Unable connect to server";
-        closesocket(ConnectSocket);
-        ConnectSocket = INVALID_SOCKET;
-        freeaddrinfo(addrResult);
-        WSACleanup();
-        return 0;
-    }
-}
-
-int Client::AskServer() {
-
-    int Result;
-
-    while (SendBuffer[0] != '&') {
-
-        cin >> SendBuffer;
-
-        Result = send(ConnectSocket, SendBuffer, (int) strlen(SendBuffer), 0);
+    for (int Counter = 0; Counter < 5; Counter++) {
+        Result = connect(ConnectSocket, addrResult->ai_addr, (int) addrResult->ai_addrlen);
+        if (Result != SOCKET_ERROR) break;
         if (Result == SOCKET_ERROR) {
-            cout << "Send failed";
+            cout << "Trying to connect...\n";
+            sleep_for(seconds(2));
+            continue;
+        } if (Counter == 4) {
+            cout << "Unable connect to server";
             closesocket(ConnectSocket);
+            ConnectSocket = INVALID_SOCKET;
             freeaddrinfo(addrResult);
             WSACleanup();
-            return 1;
+            return 0;
         }
-
-        recv(ConnectSocket, recvBuffer, 512, 0);
-        cout << recvBuffer << endl;
     }
 
+}
 
-    Result = shutdown(ConnectSocket, SD_SEND);
+int Client::AskServer(string Command) {
+    int Result;
+
+    //clear the buffer
+    for (int i = 0; i < (int) strlen(SendBuffer); i++) {
+        SendBuffer[i] = ' ';
+    }
+    //send buffer string command
+    for (int i = 0; i < Command.length(); i++) {
+        SendBuffer[i] = Command[i];
+    }
+
+    //send command to server
+    Result = send(ConnectSocket, SendBuffer, (int) strlen(SendBuffer), 0);
+    if (Result == SOCKET_ERROR) {
+        cout << "Send failed";
+        closesocket(ConnectSocket);
+        freeaddrinfo(addrResult);
+        WSACleanup();
+        return 1;
+    }
+
+    //receive server answer
+    recv(ConnectSocket, recvBuffer, 512, 0);
+    cout << recvBuffer << endl;
+}
+
+int Client::CloseConnection() {
+    //shutdown connection and close socket
+    int Result = shutdown(ConnectSocket, SD_SEND);
     if (Result == SOCKET_ERROR) {
         cout << "Shutdown error " << Result << endl;
         closesocket(ConnectSocket);
@@ -81,5 +101,4 @@ int Client::AskServer() {
     freeaddrinfo(addrResult);
     WSACleanup();
     return 0;
-
 }

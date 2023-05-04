@@ -6,18 +6,18 @@
 
 class Client {
 private:
-    WSADATA wsaData;
-    ADDRINFO hints;
-    ADDRINFO* addrResult = NULL;
-    SOCKET ConnectSocket = INVALID_SOCKET;
+    static WSADATA wsaData;
+    static ADDRINFO hints;
+    static ADDRINFO* addrResult;
+    static SOCKET ConnectSocket;
 
-    char SendBuffer[20];
-    char recvBuffer[512];
+    static char SendBuffer[64];
+    static char recvBuffer[512];
 public:
 
-    int Initialize();
-    int AskServer();
-
+    static int Initialize();
+    static int AskServer(string Command);
+    static int CloseConnection();
 };
 
 
