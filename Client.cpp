@@ -5,7 +5,7 @@ ADDRINFO Client::hints;
 ADDRINFO* Client::addrResult = NULL;
 SOCKET Client::ConnectSocket = INVALID_SOCKET;
 char Client::SendBuffer[64];
-char Client::recvBuffer[512];
+char Client::recvBuffer[2048];
 
 int Client::Initialize() {
     int Result;

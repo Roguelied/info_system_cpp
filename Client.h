@@ -12,7 +12,7 @@ private:
     static SOCKET ConnectSocket;
 
     static char SendBuffer[64];
-    static char recvBuffer[512];
+    static char recvBuffer[2048];
 public:
 
     static int Initialize();
