@@ -37,11 +37,12 @@ void UserInterface::Clear(int x1, int y1, int x2, int y2) {
     }
 }
 
-string UserInterface::Input(int x, int y, const char *length, char replace) {
+string UserInterface::Input(int x, int y, int length, char replace) {
 
     char buffer[128] = {0};
     char *ptr = buffer;
     unsigned char symbol;
+    char* arr[length];
 
     gotoxy(x, y); //where field is
 
@@ -63,7 +64,7 @@ string UserInterface::Input(int x, int y, const char *length, char replace) {
             continue;
         }
 
-        if (symbol >= VK_SPACE and (in_range(buffer, length))) {
+        if (symbol >= VK_SPACE and (in_range(buffer,  *arr))) {
             *ptr++ = symbol;
             if (replace == ' ') { putch(symbol); }
             else { putch(replace); }
@@ -127,13 +128,13 @@ int UserInterface::LogMenu() {
                 AdvancedOutputToXY(145, 30, TurnWhite, "LOGIN FOR SERVER");
                 AdvancedOutputToXY(113, 32, "Name : ");
                 AdvancedOutputToXY(113, 36, "Password : ");
-                string ServerLog = Input(120, 32, MAX_LOGIN, ' ');
+                string ServerLog = Input(120, 32, MAX_INPUT, ' ');
                 if (ServerLog == "-1") {
                     Clear(108, 29, 198, 39);
                     gotoxy(156, 27);
                     break;
                 }
-                string ServerPas = Input(124, 36, MAX_PASS, '*');
+                string ServerPas = Input(124, 36, MAX_INPUT, '*');
                 if (ServerPas == "-1") {
                     Clear(108, 29, 198, 39);
                     gotoxy(156, 27);
@@ -177,13 +178,13 @@ int UserInterface::LogMenu() {
                     AdvancedOutputToXY(52, 30, TurnWhite, "LOGIN");
                     AdvancedOutputToXY(15, 32, "Name : ");
                     AdvancedOutputToXY(15, 36, "Password : ");
-                    string LoginResult = Input(22, 32, MAX_LOGIN, ' ');
+                    string LoginResult = Input(22, 32, MAX_INPUT, ' ');
                     if (LoginResult == "-1") {
                         Clear(10, 29, 100, 39);
                         gotoxy(54, 27);
                         break;
                     }
-                    string PasswordResult = Input(26, 36, MAX_PASS, '*');
+                    string PasswordResult = Input(26, 36, MAX_INPUT, '*');
                     if (PasswordResult == "-1") {
                         Clear(10, 29, 100, 39);
                         gotoxy(54, 27);
@@ -203,19 +204,19 @@ int UserInterface::LogMenu() {
                     AdvancedOutputToXY(13, 36, "Create password : ");
                     AdvancedOutputToXY(13, 39, "Repeat password : ");
                     for (;;) {
-                        string RegLoginResult = Input(31, 33, MAX_LOGIN, ' ');
+                        string RegLoginResult = Input(31, 33, MAX_INPUT, ' ');
                         if (RegLoginResult == "-1") {
                             Clear(10, 29, 100, 43);
                             gotoxy(54, 27);
                             break;
                         }//else{system("cls");}
-                        string RegPassResult = Input(31, 36, MAX_LOGIN, '*');
+                        string RegPassResult = Input(31, 36, MAX_INPUT, '*');
                         if (RegPassResult == "-1") {
                             Clear(10, 29, 100, 43);
                             gotoxy(54, 27);
                             break;
                         }
-                        string RegPassCheckResult = Input(31, 39, MAX_LOGIN, '*');
+                        string RegPassCheckResult = Input(31, 39, MAX_INPUT, '*');
                         if (RegPassCheckResult == "-1") {
                             Clear(10, 29, 100, 43);
                             gotoxy(54, 27);
