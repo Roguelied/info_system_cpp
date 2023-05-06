@@ -74,15 +74,29 @@ int Client::AskServer(string Command) {
     //send command to server
     Result = send(ConnectSocket, SendBuffer, (int) strlen(SendBuffer), 0);
     if (Result == SOCKET_ERROR) {
-        cout << "Send failed";
+        //cout << "Send failed";
         closesocket(ConnectSocket);
         freeaddrinfo(addrResult);
         WSACleanup();
-        return 1;
+        return -1;
     }
 
     //receive server answer
     recv(ConnectSocket, recvBuffer, 512, 0);
+
+    if (strcmp(recvBuffer, "LISTEN_TO_ME") == 0) {
+        int Index;
+        string Buffer;
+        cout << recvBuffer << endl;
+        recv(ConnectSocket, recvBuffer, 512, 0);
+        Index = atoi(recvBuffer);
+        cout << Index << endl;
+
+        recv(ConnectSocket, recvBuffer, 512, 0);
+        Buffer = recvBuffer;
+
+    }
+
     cout << recvBuffer << endl;
 }
 

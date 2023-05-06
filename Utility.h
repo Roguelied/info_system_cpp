@@ -16,6 +16,7 @@
 #include <fstream>
 #include <string>
 #include <iomanip>
+#include <typeinfo>
 
 #define WIN32_LEAN_AND_MEAN //wtf is that?
 #define wait getch()
