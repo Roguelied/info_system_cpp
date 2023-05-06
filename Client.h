@@ -16,7 +16,7 @@ private:
 public:
 
     static int Initialize();
-    static int AskServer(string Command);
+    static string AskServer(string Command);
     static int CloseConnection();
 };
 

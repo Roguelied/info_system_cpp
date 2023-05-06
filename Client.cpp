@@ -59,7 +59,7 @@ int Client::Initialize() {
 
 }
 
-int Client::AskServer(string Command) {
+string Client::AskServer(string Command) {
     int Result;
 
     //clear the buffer
@@ -78,7 +78,7 @@ int Client::AskServer(string Command) {
         closesocket(ConnectSocket);
         freeaddrinfo(addrResult);
         WSACleanup();
-        return -1;
+        return "SOCKET_ERROR";
     }
 
     //receive server answer
@@ -94,7 +94,7 @@ int Client::AskServer(string Command) {
 
         recv(ConnectSocket, recvBuffer, 512, 0);
         Buffer = recvBuffer;
-
+        return Buffer;
     }
 
     cout << recvBuffer << endl;
