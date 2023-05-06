@@ -222,7 +222,7 @@ int UserInterface::LogMenu() {
                             break;
                         }
                         if (RegPassResult == RegPassCheckResult) {
-
+                            // UREG LOGIN%PAROL%
                             int Result = Client::AskServer("UREG " + RegLoginResult + "%" + RegPassCheckResult + "%");
                             if (Result == -1) {
                                 AdvancedOutputToXY(50, 41, TurnRed, "SERVER NOT AVAILABLE, TRY LATER");
