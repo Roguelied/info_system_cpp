@@ -223,18 +223,20 @@ int UserInterface::LogMenu() {
                         }
                         if (RegPassResult == RegPassCheckResult) {
                             // UREG LOGIN%PAROL%
-                            int Result = Client::AskServer("UREG " + RegLoginResult + "%" + RegPassCheckResult + "%");
-                            if (Result == -1) {
-                                AdvancedOutputToXY(50, 41, TurnRed, "SERVER NOT AVAILABLE, TRY LATER");
-                                sleep_for(milliseconds(1200));
-                                Clear(31, 33, 68, 41);
-                                continue;
-                            } else {
-                                AdvancedOutputToXY(50, 41, TurnRed, "SUCCESSFULLY REGISTERED, TRY SIGN IN");
-                                sleep_for(milliseconds(1200));
-                                Clear(31, 33, 68, 41);
-                                continue;
-                            }
+                            string Result = Client::AskServer("UREG " + RegLoginResult + "%" + RegPassCheckResult + "%");
+                            cout << Result; sleep_for(milliseconds(1200));
+                            continue;
+//                            if (Result == "Username is taken") {
+//                                AdvancedOutputToXY(50, 41, TurnRed, "THIS USERNAME IS TAKEN");
+//                                sleep_for(milliseconds(1200));
+//                                Clear(31, 33, 68, 41);
+//                                continue;
+//                            } else {
+//                                AdvancedOutputToXY(50, 41, TurnRed, "SUCCESSFULLY REGISTERED, TRY SIGN IN");
+//                                sleep_for(milliseconds(1200));
+//                                Clear(31, 33, 68, 41);
+//                                continue;
+//                            }
 
 
                         } else if (RegPassResult != RegPassCheckResult) {

@@ -18,17 +18,17 @@
 // UREG Login%Passwd%
 //
 int main() {
-    InitializeSettings();
+    //InitializeSettings();
     Client::Initialize();
 
 
-    //UserInterface::StartMenu();
-
+    UserInterface::StartMenu();
+    //cout << Client::AskServer("UREG kakaha%boba%");
     //Client::AskServer("UDEL 22");
     //Client::AskServer("DDEL 2");
     //Client::AskServer("AALL");
     //Client::AskServer("RES 4 Admin%");
-    Client::AskServer("AALL");
+    //Client::AskServer("AALL");
 
     //Client::AskServer("REG NewLogin%NewPassw%");
     //Client::CloseConnection();

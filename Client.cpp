@@ -74,7 +74,7 @@ string Client::AskServer(string Command) {
     //send command to server
     Result = send(ConnectSocket, SendBuffer, (int) strlen(SendBuffer), 0);
     if (Result == SOCKET_ERROR) {
-        //cout << "Send failed";
+        cout << "Send failed";
         closesocket(ConnectSocket);
         freeaddrinfo(addrResult);
         WSACleanup();
@@ -98,6 +98,7 @@ string Client::AskServer(string Command) {
     }
 
     cout << recvBuffer << endl;
+    return {};
 }
 
 int Client::CloseConnection() {
