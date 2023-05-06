@@ -1,10 +1,7 @@
 #ifndef INFO_SYSTEM_CPP_USERINTERFACE_H
 #define INFO_SYSTEM_CPP_USERINTERFACE_H
 
-#include <utility>
-
-#include "Utility.h"
-
+#include "Client.h"
 
 class Button;
 class UserInterface {
@@ -15,6 +12,7 @@ private:
     static string AdminPsswrd;
     static string ServerPsswrd;
     static string ServerLoggin;
+
 public:
     static vector<Button> Buttons;
     static void DrawFrame(int x1,int y1,int x2,int y2);
@@ -68,6 +66,7 @@ public:
     void Action(){
         Container2();
     }
+
     Button(int x1, int y1, string Text, function<string(int, int, const char*, char)> Function);
     Button(int x1, int y1, string Text, function<void(int, int)> Function);
     Button(int x1, int y1, string Text, function<void()> Function);

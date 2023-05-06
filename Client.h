@@ -12,11 +12,11 @@ private:
     static SOCKET ConnectSocket;
 
     static char SendBuffer[64];
-    static char recvBuffer[512];
+    static char recvBuffer[2048];
 public:
 
     static int Initialize();
-    static int AskServer(string Command);
+    static string AskServer(string Command);
     static int CloseConnection();
 };
 

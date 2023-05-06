@@ -3,23 +3,35 @@
 #include "UserInterface.h"
 
 
-void  printKek1(){
-    cout << "Hello\n";
-}
+//SERver commands UREG UFND UDEL
+//                DADD DFND DDEL
+//                RES DALL UALL AALL
+//
+//          UFND Login%Pass%    UDEL 1      DADD BCLASS%DATA/TIME%34%NONE%
+//          DFND BCLASS%DATA/TIME%34%LOGIN%
+//          DDEL 12
+//          RES 23 LOGIN
+//          DALL
+//
+//
 
-string jopa(int x) {
-    cout << "123";
-    return "123";
-}
-
+// UREG Login%Passwd%
+//
 int main() {
-    //InitializeSettings();
+    InitializeSettings();
     Client::Initialize();
-    Client::AskServer("DEL 22");
-    Client::AskServer("DEL 44");
-    Client::AskServer("FND LoginTest%PassTest%");
-    Client::AskServer("REG NewLogin%NewPassw%");
-    Client::CloseConnection();
+
+
+    //UserInterface::StartMenu();
+
+    //Client::AskServer("UDEL 22");
+    //Client::AskServer("DDEL 2");
+    //Client::AskServer("AALL");
+    //Client::AskServer("RES 4 Admin%");
+    Client::AskServer("AALL");
+
+    //Client::AskServer("REG NewLogin%NewPassw%");
+    //Client::CloseConnection();
     wait;
 }
 

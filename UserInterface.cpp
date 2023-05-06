@@ -1,6 +1,6 @@
 //super govnocode by notFOUND
 #include "UserInterface.h"
-#include "Utility.h"
+
 
 string UserInterface::AdminPsswrd = "admin";
 string UserInterface::AdminLoggin = "admin";
@@ -223,8 +223,21 @@ int UserInterface::LogMenu() {
                             break;
                         }
                         if (RegPassResult == RegPassCheckResult) {
-                            system("cls");
-                            exit(2);
+                            // UREG LOGIN%PAROL%
+                            int Result = Client::AskServer("UREG " + RegLoginResult + "%" + RegPassCheckResult + "%");
+                            if (Result == -1) {
+                                AdvancedOutputToXY(50, 41, TurnRed, "SERVER NOT AVAILABLE, TRY LATER");
+                                sleep_for(milliseconds(1200));
+                                Clear(31, 33, 68, 41);
+                                continue;
+                            } else {
+                                AdvancedOutputToXY(50, 41, TurnRed, "SUCCESSFULLY REGISTERED, TRY SIGN IN");
+                                sleep_for(milliseconds(1200));
+                                Clear(31, 33, 68, 41);
+                                continue;
+                            }
+
+
                         } else if (RegPassResult != RegPassCheckResult) {
                             AdvancedOutputToXY(50, 41, TurnRed, "PASSWORDS MISMATCH");
                             sleep_for(milliseconds(1200));

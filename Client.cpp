@@ -5,7 +5,7 @@ ADDRINFO Client::hints;
 ADDRINFO* Client::addrResult = NULL;
 SOCKET Client::ConnectSocket = INVALID_SOCKET;
 char Client::SendBuffer[64];
-char Client::recvBuffer[512];
+char Client::recvBuffer[2048];
 
 int Client::Initialize() {
     int Result;
@@ -59,7 +59,7 @@ int Client::Initialize() {
 
 }
 
-int Client::AskServer(string Command) {
+string Client::AskServer(string Command) {
     int Result;
 
     //clear the buffer
@@ -74,15 +74,29 @@ int Client::AskServer(string Command) {
     //send command to server
     Result = send(ConnectSocket, SendBuffer, (int) strlen(SendBuffer), 0);
     if (Result == SOCKET_ERROR) {
-        cout << "Send failed";
+        //cout << "Send failed";
         closesocket(ConnectSocket);
         freeaddrinfo(addrResult);
         WSACleanup();
-        return 1;
+        return "SOCKET_ERROR";
     }
 
     //receive server answer
     recv(ConnectSocket, recvBuffer, 512, 0);
+
+    if (strcmp(recvBuffer, "LISTEN_TO_ME") == 0) {
+        int Index;
+        string Buffer;
+        cout << recvBuffer << endl;
+        recv(ConnectSocket, recvBuffer, 512, 0);
+        Index = atoi(recvBuffer);
+        cout << Index << endl;
+
+        recv(ConnectSocket, recvBuffer, 512, 0);
+        Buffer = recvBuffer;
+        return Buffer;
+    }
+
     cout << recvBuffer << endl;
 }
 
