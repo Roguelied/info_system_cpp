@@ -37,13 +37,12 @@ void UserInterface::Clear(int x1, int y1, int x2, int y2) {
     }
 }
 
-string UserInterface::Input(int x, int y, int length, char replace) {
+string UserInterface::Input(int x, int y, char* length, char replace) {
 
     char buffer[128] = {0};
     char *ptr = buffer;
     unsigned char symbol;
 
-    char* arr[length];
 
     gotoxy(x, y); //where field is
 
@@ -65,7 +64,7 @@ string UserInterface::Input(int x, int y, int length, char replace) {
             continue;
         }
 
-        if (symbol >= VK_SPACE and (in_range(buffer,  *arr))) {
+        if (symbol >= VK_SPACE and (in_range(buffer,  length))) {
             *ptr++ = symbol;
             if (replace == ' ') { putch(symbol); }
             else { putch(replace); }
@@ -142,27 +141,20 @@ int UserInterface::LogMenu() {
                         gotoxy(24, 16);
                         break;
                     }
-
                     string PasswordResult = Input(21, 23, MAX_INPUT, '*');
                     if (PasswordResult == "-1" or PasswordResult.empty()) {
                         Clear(5, 18, 40, 26);
                         gotoxy(24, 16);
                         break;
                     }
-
                     string Result = Client::AskServer("UFND " + LoginResult + "%" + PasswordResult + "%");
-
-
                     if (Result == "WRONGPASS" or Result == "NOTFOUND") {
                         cout << Result;
-
                         AdvancedOutputToXY(18,25,TurnRed,Result);
                         sleep_for(milliseconds(1000));
                         Clear(5, 18, 40, 26);
                         gotoxy(24, 16);
                         break;
-
-
                     } else {
                         stringstream StringStream(Result);
                         system("cls");
@@ -171,61 +163,60 @@ int UserInterface::LogMenu() {
                         StringStream >> Client::User.Password ;
                         StringStream >> Client::User.ID ;
                         StringStream >> Client::User.AdminFlag;
-
                         if (Client::User.AdminFlag ==  "1") {
                             PersonalAdminArea();
                         } else {
-                            DateChoice();
+                            PersonalUserArea();
                         }
                     }
 
                 } else if ((LoginFlag + 1) % 2 == 0 and KeyCheck(key) == "enter") {
-                    Clear(42, 29, 61, 35);
-                    DrawFrame(10, 29, 100, 43);
-                    AdvancedOutputToXY(50, 30, TurnWhite, "REGISTRATION");
-                    AdvancedOutputToXY(13, 33, "Enter your name : ");
-                    AdvancedOutputToXY(13, 36, "Create password : ");
-                    AdvancedOutputToXY(13, 39, "Repeat password : ");
+                    Clear(5, 18, 40, 26);
+                    DrawFrame(5, 18, 40, 27);
+                    AdvancedOutputToXY(20, 19, TurnWhite, "REGISTRATION");
+                    AdvancedOutputToXY(10, 21, "Enter your name : ");
+                    AdvancedOutputToXY(10, 23, "Create password : ");
+                    AdvancedOutputToXY(10, 25, "Repeat password : ");
                     for (;;) {
-                        string RegLoginResult = Input(31, 33, MAX_INPUT, ' ');
+                        string RegLoginResult = Input(28, 21, MAX_INPUT, ' ');
                         if (RegLoginResult == "-1") {
-                            Clear(10, 29, 100, 43);
-                            gotoxy(54, 27);
+                            Clear(5, 18, 40, 26);
+                            gotoxy(24, 16);
                             break;
                         }//else{system("cls");}
-                        string RegPassResult = Input(31, 36, MAX_INPUT, '*');
+                        string RegPassResult = Input(28, 23, MAX_INPUT, '*');
                         if (RegPassResult == "-1") {
-                            Clear(10, 29, 100, 43);
-                            gotoxy(54, 27);
+                            Clear(5, 18, 40, 26);
+                            gotoxy(24, 16);
                             break;
                         }
-                        string RegPassCheckResult = Input(31, 39, MAX_INPUT, '*');
+                        string RegPassCheckResult = Input(28, 25, MAX_INPUT, '*');
                         if (RegPassCheckResult == "-1") {
-                            Clear(10, 29, 100, 43);
-                            gotoxy(54, 27);
+                            Clear(5, 18, 40, 26);
+                            gotoxy(24, 16);
                             break;
                         }
                         if (RegPassResult == RegPassCheckResult) {
-                            // UREG LOGIN%PAROL%
                             string Result = Client::AskServer("UREG " + RegLoginResult + "%" + RegPassCheckResult + "%");
-                            cout << Result; sleep_for(milliseconds(1200));
                             if (Result == "Username is taken") {
-                                AdvancedOutputToXY(50, 41, TurnRed, "THIS USERNAME IS TAKEN");
+                                AdvancedOutputToXY(10,26,TurnRed,Result);
                                 sleep_for(milliseconds(1200));
-                                Clear(31, 33, 68, 41);
-                                continue;
+                                Clear(5, 18, 40, 27);
+                                gotoxy(24, 16);
+                                break;
                             } else {
-                                AdvancedOutputToXY(50, 41, TurnRed, "SUCCESSFULLY REGISTERED, TRY SIGN IN");
+                                AdvancedOutputToXY(6, 26, TurnRed, "SUCCESSFULLY REGISTERED,SIGN IN");
                                 sleep_for(milliseconds(1200));
-                                Clear(31, 33, 68, 41);
-                                continue;
+                                Clear(5, 18, 40, 27);
+                                gotoxy(24, 16);
+                                break;
                             }
-
                         } else if (RegPassResult != RegPassCheckResult) {
-                            AdvancedOutputToXY(50, 41, TurnRed, "PASSWORDS MISMATCH");
+                            AdvancedOutputToXY(10,26,TurnRed,"PASSWORDS MISMATCH");
                             sleep_for(milliseconds(1200));
-                            Clear(31, 33, 68, 41);
-                            continue;
+                            Clear(5, 18, 40, 27);
+                            gotoxy(24, 16);
+                            break;
                         }
                     }
                     break;
@@ -283,6 +274,10 @@ string UserInterface::DateChoice() {
 }
 
 void UserInterface::PersonalUserArea(){
+    DrawFrame(0, 0, 119, 29);
+    AdvancedOutputToXY(3,3,TurnWhite,"login : " + Client::User.Login);
+    AdvancedOutputToXY(3,5,TurnWhite,"user id : " + Client::User.ID);
+
 
 }
 
