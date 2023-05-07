@@ -17,7 +17,7 @@ public:
     static vector<Button> Buttons;
     static void DrawFrame(int x1,int y1,int x2,int y2);
     static void Clear(int x1,int x2,int y1,int y2);
-    static string Input(int x, int y,  int length, char replace);
+    static string Input(int x, int y,  char* length, char replace);
 
 
     static int Press();
