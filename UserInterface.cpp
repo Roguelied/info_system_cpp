@@ -37,11 +37,13 @@ void UserInterface::Clear(int x1, int y1, int x2, int y2) {
     }
 }
 
-string UserInterface::Input(int x, int y, const char *length, char replace) {
+string UserInterface::Input(int x, int y, int length, char replace) {
 
     char buffer[128] = {0};
     char *ptr = buffer;
     unsigned char symbol;
+
+    char* arr[length];
 
     gotoxy(x, y); //where field is
 
@@ -63,7 +65,7 @@ string UserInterface::Input(int x, int y, const char *length, char replace) {
             continue;
         }
 
-        if (symbol >= VK_SPACE and (in_range(buffer, length))) {
+        if (symbol >= VK_SPACE and (in_range(buffer,  *arr))) {
             *ptr++ = symbol;
             if (replace == ' ') { putch(symbol); }
             else { putch(replace); }
@@ -78,130 +80,88 @@ string UserInterface::Input(int x, int y, const char *length, char replace) {
 ========================================================================================================================*/
 
 void UserInterface::StartMenu() {
-    DrawFrame(0, 0, 210, 53);
-    AdvancedOutputToXY(50, 10, TurnWhite,
+    DrawFrame(0, 0, 119, 29);
+    AdvancedOutputToXY(5, 5, TurnWhite,
                        "WECLOME TO SUPER DUPER SYSTEM32 IN DATA BASE FOR ADMINS/CLIENTS/PEOPLE/GOLLUMS/WOMEN/DEMONS/GHOSTS/KURT COBAIN");
-    Button Enter(50, 27, "ENTER", UserInterface::Press);
-    Button Exit(150, 27, "EXIT", UserInterface::Press);
+    Button Enter(20, 16, "ENTER", UserInterface::Press);
+    Button Exit(100, 16, "EXIT", UserInterface::Press);
     UserInterface::SelectionMode();
     UserInterface::DeleteButtons();
     LogMenu();
 }
 
 int UserInterface::LogMenu() {
-    int isServer = 0;
-    int couter = 5;
-    int CurrentX = 100;
-    AdvancedOutputToXY(0, 30, TurnAqua);
-    DrawFrame(0, 0, 210, 53);
-    AdvancedOutputToXY(99, 10, TurnWhite, "WHO ARE YOU");
-    AdvancedOutputToXY(CurrentX + 50, 27, "SERVER");
-    AdvancedOutputToXY(CurrentX, 40, TurnWhite, "EXIT");
-    AdvancedOutputToXY(CurrentX - 50, 27, TurnBackGreen, "USER");
+    int couter = 1;
+    DrawFrame(0, 0, 119, 29);
+    AdvancedOutputToXY(50, 10, TurnWhite, "ENTER SYSTEM 32");
+    AdvancedOutputToXY(100, 16, TurnWhite, "EXIT");
+    AdvancedOutputToXY(20, 16, TurnBackGreen, "USER");
     while (true) {
         int Key = _getch();
         if (KeyCheck(Key) == "tab") {
-            if ((couter + 1) % 3 == 0) {
-                AdvancedOutputToXY(CurrentX - 50, 27, TurnWhite, "USER");
-                AdvancedOutputToXY(CurrentX, 40, TurnWhite, "EXIT");
-                AdvancedOutputToXY(CurrentX + 50, 27, TurnBackGreen, "SERVER");
+            if ((couter + 1) % 2 == 0) {
+                AdvancedOutputToXY(20, 16, TurnWhite, "USER");
+                AdvancedOutputToXY(100, 16, TurnBackGreen, "EXIT");
                 couter++;
-                isServer = 1;
-            } else if (couter % 3 == 0) {
-                AdvancedOutputToXY(CurrentX - 50, 27, TurnWhite, "USER");
-                AdvancedOutputToXY(CurrentX + 50, 27, TurnWhite, "SERVER");
-                AdvancedOutputToXY(CurrentX, 40, TurnBackGreen, "EXIT");
+            } else if (couter % 2 == 0) {
+                AdvancedOutputToXY(100, 16, TurnWhite, "EXIT");
+                AdvancedOutputToXY(20 , 16, TurnBackGreen, "USER");
                 couter++;
-            } else if ((couter + 2) % 3 == 0) {
-                AdvancedOutputToXY(CurrentX + 50, 27, TurnWhite, "SERVER");
-                AdvancedOutputToXY(CurrentX, 40, TurnWhite, "EXIT");
-                AdvancedOutputToXY(CurrentX - 50, 27, TurnBackGreen, "USER");
-                couter++;
-                isServer = 0;
             }
-        } else if (KeyCheck(Key) == "enter" and (couter + 2) % 3 == 0) {
+        } else if (KeyCheck(Key) == "enter" and couter % 2 == 0) {
             exit(666);
-        } else if (isServer and KeyCheck(Key) == "enter") {
-            while (1) {
-                DrawFrame(108, 29, 198, 39);
-                AdvancedOutputToXY(145, 30, TurnWhite, "LOGIN FOR SERVER");
-                AdvancedOutputToXY(113, 32, "Name : ");
-                AdvancedOutputToXY(113, 36, "Password : ");
-                string ServerLog = Input(120, 32, MAX_LOGIN, ' ');
-                if (ServerLog == "-1") {
-                    Clear(108, 29, 198, 39);
-                    gotoxy(156, 27);
-                    break;
-                }
-                string ServerPas = Input(124, 36, MAX_PASS, '*');
-                if (ServerPas == "-1") {
-                    Clear(108, 29, 198, 39);
-                    gotoxy(156, 27);
-                    break;
-                }
-                if (KeyCheck(Key) == "enter" and
-                    (ServerLog == UserInterface::ServerLoggin and ServerPas == UserInterface::ServerPsswrd)) {
-                    system("cls");
-                    return 1;                                                                                 //server=1
-                }
-                if (KeyCheck(Key) == "enter" and
-                    (ServerLog != UserInterface::ServerLoggin or ServerPas != UserInterface::ServerPsswrd)) {
-                    AdvancedOutputToXY(150, 38, TurnRed, "PASSWORDS MISMATCH");
-                    sleep_for(milliseconds(1200));
-                    Clear(108, 29, 198, 39);
-                    continue;
-                }
-            }
-        } else if (!isServer and KeyCheck(Key) == "enter") {
+        }  else if ((couter+1)%2==0 and KeyCheck(Key) == "enter") {
             int LoginFlag = 2;
-            DrawFrame(42, 29, 61, 35);
-            AdvancedOutputToXY(48, 33, TurnWhite, "REGISTER");
-            AdvancedOutputToXY(48, 31, TurnBackGreen, "LOGG IN");
+            DrawFrame(16, 18, 29, 22);
+            AdvancedOutputToXY(19, 21, TurnWhite, "REGISTER");
+            AdvancedOutputToXY(19, 19, TurnBackGreen, "LOGG IN");
             for (;;) {
                 int key = _getch();
                 if (KeyCheck(key) == "tab" and LoginFlag % 2 == 0) {
-                    AdvancedOutputToXY(48, 31, TurnWhite, "LOGG IN");
-                    AdvancedOutputToXY(48, 33, TurnBackGreen, "REGISTER");
+                    AdvancedOutputToXY(19, 19, TurnWhite, "LOGG 1N");
+                    AdvancedOutputToXY(19, 21, TurnBackGreen, "REGISTER");
                     LoginFlag++;
                 } else if (KeyCheck(key) == "tab" and (LoginFlag + 1) % 2 == 0) {
-                    AdvancedOutputToXY(48, 33, TurnWhite, "REGISTER");
-                    AdvancedOutputToXY(48, 31, TurnBackGreen, "LOGG IN");
+                    AdvancedOutputToXY(19, 21, TurnWhite, "REGISTER");
+                    AdvancedOutputToXY(19, 19, TurnBackGreen, "LOGG 1N");
                     LoginFlag++;
                 } else if (KeyCheck(key) == "esc") {
-                    Clear(42, 29, 61, 35);
-                    gotoxy(54, 27);
+                    Clear(16, 18, 29, 22);
+                    gotoxy(24, 16);
                     break;
                 } else if (LoginFlag % 2 == 0 and KeyCheck(key) == "enter") {
-                    Clear(42, 29, 61, 35);
-                    DrawFrame(10, 29, 100, 39);
-                    AdvancedOutputToXY(52, 30, TurnWhite, "LOGIN");
-                    AdvancedOutputToXY(15, 32, "Name : ");
-                    AdvancedOutputToXY(15, 36, "Password : ");
-                    string LoginResult = Input(22, 32, MAX_LOGIN, ' ');
-                    if (LoginResult == "-1") {
-                        Clear(10, 29, 100, 39);
-                        gotoxy(54, 27);
+                    Clear(16, 18, 29, 22);
+                    DrawFrame(5, 18, 40, 26);
+                    AdvancedOutputToXY(20, 19, TurnWhite, "LOG1N");
+                    AdvancedOutputToXY(10, 21, "Name : ");
+                    AdvancedOutputToXY(10, 23, "Password : ");
+                    string LoginResult = Input(17, 21, MAX_INPUT, ' ');
+
+                    if (LoginResult == "-1" or LoginResult.empty()) {
+                        Clear(5, 18, 40, 26);
+                        gotoxy(24, 16);
                         break;
                     }
-                    string PasswordResult = Input(26, 36, MAX_PASS, '*');
-                    if (PasswordResult == "-1") {
-                        Clear(10, 29, 100, 39);
-                        gotoxy(54, 27);
+
+                    string PasswordResult = Input(21, 23, MAX_INPUT, '*');
+                    if (PasswordResult == "-1" or PasswordResult.empty()) {
+                        Clear(5, 18, 40, 26);
+                        gotoxy(24, 16);
                         break;
                     }
+
                     string Result = Client::AskServer("UFND " + LoginResult + "%" + PasswordResult + "%");
 
-                    if (Result == "WRONGPASS") {
-                        //clear window
-                        cout << Result;
-                        wait;
-                        continue;
 
-                    } else if (Result == "NOTFOUND") {
-                        //clear window
+                    if (Result == "WRONGPASS" or Result == "NOTFOUND") {
                         cout << Result;
-                        wait;
-                        continue;
+
+                        AdvancedOutputToXY(18,25,TurnRed,Result);
+                        sleep_for(milliseconds(1000));
+                        Clear(5, 18, 40, 26);
+                        gotoxy(24, 16);
+                        break;
+
 
                     } else {
                         stringstream StringStream(Result);
@@ -227,19 +187,19 @@ int UserInterface::LogMenu() {
                     AdvancedOutputToXY(13, 36, "Create password : ");
                     AdvancedOutputToXY(13, 39, "Repeat password : ");
                     for (;;) {
-                        string RegLoginResult = Input(31, 33, MAX_LOGIN, ' ');
+                        string RegLoginResult = Input(31, 33, MAX_INPUT, ' ');
                         if (RegLoginResult == "-1") {
                             Clear(10, 29, 100, 43);
                             gotoxy(54, 27);
                             break;
                         }//else{system("cls");}
-                        string RegPassResult = Input(31, 36, MAX_LOGIN, '*');
+                        string RegPassResult = Input(31, 36, MAX_INPUT, '*');
                         if (RegPassResult == "-1") {
                             Clear(10, 29, 100, 43);
                             gotoxy(54, 27);
                             break;
                         }
-                        string RegPassCheckResult = Input(31, 39, MAX_LOGIN, '*');
+                        string RegPassCheckResult = Input(31, 39, MAX_INPUT, '*');
                         if (RegPassCheckResult == "-1") {
                             Clear(10, 29, 100, 43);
                             gotoxy(54, 27);
@@ -321,6 +281,18 @@ string UserInterface::DateChoice() {
         }
     }
 }
+
+void UserInterface::PersonalUserArea(){
+
+}
+
+
+
+
+
+
+
+
 
 void UserInterface::PersonalAdminArea() {
     int selector = 7;
