@@ -11,7 +11,7 @@ void gotoxy(int x, int y)
 void InitializeSettings() {
     SetConsoleOutputCP( 65001 );
     system("title Information system prototype");
-    ::SendMessage(::GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000); //fullscreen
+    //::SendMessage(::GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000); //fullscreen
     //system("mode con cols=129 lines=32");
 }
 

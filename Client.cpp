@@ -4,8 +4,11 @@ WSADATA Client::wsaData;
 ADDRINFO Client::hints;
 ADDRINFO* Client::addrResult = NULL;
 SOCKET Client::ConnectSocket = INVALID_SOCKET;
-char Client::SendBuffer[64];
+char Client::SendBuffer[512];
 char Client::recvBuffer[2048];
+User Client::User;
+
+
 
 int Client::Initialize() {
     int Result;
@@ -82,23 +85,10 @@ string Client::AskServer(string Command) {
     }
 
     //receive server answer
-    recv(ConnectSocket, recvBuffer, 512, 0);
+    recv(ConnectSocket, recvBuffer, 2048, 0);
 
-    if (strcmp(recvBuffer, "LISTEN_TO_ME") == 0) {
-        int Index;
-        string Buffer;
-        cout << recvBuffer << endl;
-        recv(ConnectSocket, recvBuffer, 512, 0);
-        Index = atoi(recvBuffer);
-        cout << Index << endl;
-
-        recv(ConnectSocket, recvBuffer, 512, 0);
-        Buffer = recvBuffer;
-        return Buffer;
-    }
-
-    cout << recvBuffer << endl;
-    return {};
+    string Buffer(recvBuffer);
+    return Buffer;
 }
 
 int Client::CloseConnection() {

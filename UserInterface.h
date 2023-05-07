@@ -28,7 +28,7 @@ public:
 
 
 
-
+    static int PersonalArea();
     static int LogMenu();
     static void StartMenu();
     static string DateChoice();
