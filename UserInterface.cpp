@@ -189,13 +189,37 @@ int UserInterface::LogMenu() {
                         Clear(10, 29, 100, 39);
                         gotoxy(54, 27);
                         break;
-                    } else if (PasswordResult == AdminPsswrd and LoginResult == AdminLoggin) {
-                        system("cls");
-                        PersonalAdminArea();
-                    } else {
-                        system("cls");
-                        exit(1);
                     }
+                    string Result = Client::AskServer("UFND " + LoginResult + "%" + PasswordResult + "%");
+
+                    if (Result == "WRONGPASS") {
+                        //clear window
+                        cout << Result;
+                        wait;
+                        continue;
+
+                    } else if (Result == "NOTFOUND") {
+                        //clear window
+                        cout << Result;
+                        wait;
+                        continue;
+
+                    } else {
+                        stringstream StringStream(Result);
+                        system("cls");
+                        StringStream >> Client::User.Index ;
+                        StringStream >> Client::User.Login ;
+                        StringStream >> Client::User.Password ;
+                        StringStream >> Client::User.ID ;
+                        StringStream >> Client::User.AdminFlag;
+
+                        if (Client::User.AdminFlag ==  "1") {
+                            PersonalAdminArea();
+                        } else {
+                            DateChoice();
+                        }
+                    }
+
                 } else if ((LoginFlag + 1) % 2 == 0 and KeyCheck(key) == "enter") {
                     Clear(42, 29, 61, 35);
                     DrawFrame(10, 29, 100, 43);
@@ -224,9 +248,10 @@ int UserInterface::LogMenu() {
                         }
                         if (RegPassResult == RegPassCheckResult) {
                             // UREG LOGIN%PAROL%
-                            int Result = Client::AskServer("UREG " + RegLoginResult + "%" + RegPassCheckResult + "%");
-                            if (Result == -1) {
-                                AdvancedOutputToXY(50, 41, TurnRed, "SERVER NOT AVAILABLE, TRY LATER");
+                            string Result = Client::AskServer("UREG " + RegLoginResult + "%" + RegPassCheckResult + "%");
+                            cout << Result; sleep_for(milliseconds(1200));
+                            if (Result == "Username is taken") {
+                                AdvancedOutputToXY(50, 41, TurnRed, "THIS USERNAME IS TAKEN");
                                 sleep_for(milliseconds(1200));
                                 Clear(31, 33, 68, 41);
                                 continue;
@@ -236,7 +261,6 @@ int UserInterface::LogMenu() {
                                 Clear(31, 33, 68, 41);
                                 continue;
                             }
-
 
                         } else if (RegPassResult != RegPassCheckResult) {
                             AdvancedOutputToXY(50, 41, TurnRed, "PASSWORDS MISMATCH");
@@ -253,6 +277,8 @@ int UserInterface::LogMenu() {
 }
 
 string UserInterface::DateChoice() {
+    string ListOfAvailable = Client::AskServer("AALL");
+    cout << ListOfAvailable;
     int CurrentY = 21;
     int CurrentX = 45;
     int Selector = 0;
@@ -385,6 +411,16 @@ void UserInterface::AddButton(Button Button) {
 void UserInterface::DeleteButtons() {
     Buttons.clear();
 }
+
+int UserInterface::PersonalArea() {
+    string ListOfAvailable = Client::AskServer("AALL");
+    cout << ListOfAvailable;
+    DrawFrame(0, 0, 119, 29);
+    AdvancedOutputToXY(5, 10, TurnBackGreen, Client::User.Login);
+
+
+}
+
 
 Button::Button(int x1, int y1, string Text, ::function<string(int, int, const char *, char)> Function) {
     this->Text = Text;

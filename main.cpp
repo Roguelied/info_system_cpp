@@ -19,17 +19,12 @@
 //
 int main() {
     InitializeSettings();
-    Client::Initialize();
+    //Client::Initialize();
 
 
-    //UserInterface::StartMenu();
+    UserInterface::PersonalArea();
 
-    //Client::AskServer("UDEL 22");
-    //Client::AskServer("DDEL 2");
-    //Client::AskServer("AALL");
-    //Client::AskServer("RES 4 Admin%");
-    Client::AskServer("AALL");
-
+    //cout << Client::AskServer("DALL"); //NOTFOUND //creds //WRONGPASS
     //Client::AskServer("REG NewLogin%NewPassw%");
     //Client::CloseConnection();
     wait;
