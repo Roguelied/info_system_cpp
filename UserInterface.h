@@ -33,6 +33,7 @@ public:
     static void StartMenu();
     static string DateChoice();
     static void PersonalAdminArea();
+    static void PersonalUserArea();
 };
 
 
