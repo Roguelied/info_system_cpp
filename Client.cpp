@@ -88,6 +88,7 @@ string Client::AskServer(string Command) {
     recv(ConnectSocket, recvBuffer, 2048, 0);
 
     string Buffer(recvBuffer);
+    memset(recvBuffer, 0, 2048);
     return Buffer;
 }
 
