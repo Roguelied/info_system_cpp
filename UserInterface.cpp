@@ -37,7 +37,7 @@ void UserInterface::Clear(int x1, int y1, int x2, int y2) {
     }
 }
 
-string UserInterface::Input(int x, int y, char* length, char replace) {
+string UserInterface::Input(int x, int y, char *length, char replace) {
 
     char buffer[128] = {0};
     char *ptr = buffer;
@@ -64,7 +64,7 @@ string UserInterface::Input(int x, int y, char* length, char replace) {
             continue;
         }
 
-        if (symbol >= VK_SPACE and (in_range(buffer,  length))) {
+        if (symbol >= VK_SPACE and (in_range(buffer, length))) {
             *ptr++ = symbol;
             if (replace == ' ') { putch(symbol); }
             else { putch(replace); }
@@ -104,12 +104,12 @@ int UserInterface::LogMenu() {
                 couter++;
             } else if (couter % 2 == 0) {
                 AdvancedOutputToXY(100, 16, TurnWhite, "EXIT");
-                AdvancedOutputToXY(20 , 16, TurnBackGreen, "USER");
+                AdvancedOutputToXY(20, 16, TurnBackGreen, "USER");
                 couter++;
             }
         } else if (KeyCheck(Key) == "enter" and couter % 2 == 0) {
             exit(666);
-        }  else if ((couter+1)%2==0 and KeyCheck(Key) == "enter") {
+        } else if ((couter + 1) % 2 == 0 and KeyCheck(Key) == "enter") {
             int LoginFlag = 2;
             DrawFrame(16, 18, 29, 22);
             AdvancedOutputToXY(19, 21, TurnWhite, "REGISTER");
@@ -150,7 +150,7 @@ int UserInterface::LogMenu() {
                     string Result = Client::AskServer("UFND " + LoginResult + "%" + PasswordResult + "%");
                     if (Result == "WRONGPASS" or Result == "NOTFOUND") {
                         cout << Result;
-                        AdvancedOutputToXY(18,25,TurnRed,Result);
+                        AdvancedOutputToXY(18, 25, TurnRed, Result);
                         sleep_for(milliseconds(1000));
                         Clear(5, 18, 40, 26);
                         gotoxy(24, 16);
@@ -158,15 +158,17 @@ int UserInterface::LogMenu() {
                     } else {
                         stringstream StringStream(Result);
                         system("cls");
-                        StringStream >> Client::User.Index ;
-                        StringStream >> Client::User.Login ;
-                        StringStream >> Client::User.Password ;
-                        StringStream >> Client::User.ID ;
+                        StringStream >> Client::User.Index;
+                        StringStream >> Client::User.Login;
+                        StringStream >> Client::User.Password;
+                        StringStream >> Client::User.ID;
                         StringStream >> Client::User.AdminFlag;
-                        if (Client::User.AdminFlag ==  "1") {
-                            PersonalAdminArea();
+                        if (Client::User.AdminFlag == "1") {
+                            PersonalUserArea();
+                            break;
                         } else {
                             PersonalUserArea();
+                            break;
                         }
                     }
 
@@ -197,9 +199,10 @@ int UserInterface::LogMenu() {
                             break;
                         }
                         if (RegPassResult == RegPassCheckResult) {
-                            string Result = Client::AskServer("UREG " + RegLoginResult + "%" + RegPassCheckResult + "%");
+                            string Result = Client::AskServer(
+                                    "UREG " + RegLoginResult + "%" + RegPassCheckResult + "%");
                             if (Result == "Username is taken") {
-                                AdvancedOutputToXY(10,26,TurnRed,Result);
+                                AdvancedOutputToXY(10, 26, TurnRed, Result);
                                 sleep_for(milliseconds(1200));
                                 Clear(5, 18, 40, 27);
                                 gotoxy(24, 16);
@@ -212,7 +215,7 @@ int UserInterface::LogMenu() {
                                 break;
                             }
                         } else if (RegPassResult != RegPassCheckResult) {
-                            AdvancedOutputToXY(10,26,TurnRed,"PASSWORDS MISMATCH");
+                            AdvancedOutputToXY(10, 26, TurnRed, "PASSWORDS MISMATCH");
                             sleep_for(milliseconds(1200));
                             Clear(5, 18, 40, 27);
                             gotoxy(24, 16);
@@ -273,20 +276,44 @@ string UserInterface::DateChoice() {
     }
 }
 
-void UserInterface::PersonalUserArea(){
+void UserInterface::PersonalUserArea() {
     DrawFrame(0, 0, 119, 29);
-    AdvancedOutputToXY(3,3,TurnWhite,"login : " + Client::User.Login);
-    AdvancedOutputToXY(3,5,TurnWhite,"user id : " + Client::User.ID);
+    AdvancedOutputToXY(2, 3, TurnWhite, "login : " + Client::User.Login);
+    AdvancedOutputToXY(2, 5, TurnWhite, "user id : " + Client::User.ID);
+    AdvancedOutputToXY(20, 3, TurnWhite, "ALL RESERVED BY " + Client::User.Login);
+    AdvancedOutputToXY(20, 5, TurnWhite, Client::AskServer("DFFR " + Client::User.Login + "%"));
+    AdvancedOutputToXY(70, 5, TurnWhite, "Exit Account");
+    AdvancedOutputToXY(70, 7, TurnWhite, "Exit System");
+    AdvancedOutputToXY(70, 3, TurnBackGreen, "Reserve somethink");
+    int Couter = 1;
+    for (;;) {
+        int Key = _getch();
+        if (KeyCheck(Key) == "tab" and (Couter + 2) % 3 == 0) {
+            AdvancedOutputToXY(70, 3, TurnWhite, "Reserve somethink");
+            AdvancedOutputToXY(70, 5, TurnBackGreen, "Exit Account");
+            Couter++;
+        } else if (KeyCheck(Key) == "tab" and (Couter+1) % 3 == 0) {
+            AdvancedOutputToXY(70, 5, TurnWhite, "Exit Account");
+            AdvancedOutputToXY(70, 7, TurnBackGreen, "Exit System");
+            Couter++;
+        } else if (KeyCheck(Key) == "tab" and (Couter) % 3 == 0) {
+            AdvancedOutputToXY(70, 7, TurnWhite, "Exit System");
+            AdvancedOutputToXY(70, 3,TurnBackGreen , "Reserve somethink");
+            Couter++;
+        }else if (KeyCheck(Key)=="enter" and Couter%3==0){
+            exit(666);
+        }else if (KeyCheck(Key)=="enter" and (Couter+1)%3==0){
+            system("cls");
+            LogMenu();
+            break;
+        }else if(KeyCheck(Key)=="enter" and ((Couter+2)%3==0 or Couter==0)){
+            AdvancedOutputToXY(40,40,TurnRed,"baboduk");
+        }
+    }
 
+    wait;
 
 }
-
-
-
-
-
-
-
 
 
 void UserInterface::PersonalAdminArea() {
@@ -337,6 +364,7 @@ void UserInterface::PersonalAdminArea() {
         }
     }
 }
+
 //**********************************************************************************************************************
 int UserInterface::Press() {
     return 0;
@@ -344,28 +372,33 @@ int UserInterface::Press() {
 
 
 int UserInterface::SelectionMode() {
-    int SizeVec= size (Buttons);
-    int flagEBYCHIU=0;
-    AdvancedOutputToXY(Buttons[flagEBYCHIU].x1,Buttons[flagEBYCHIU].y1,TurnBackGreen,Buttons[flagEBYCHIU].Text);
-    for(;;){
-        int Key=_getch();
-        if(KeyCheck(Key)=="tab"){
-            if(flagEBYCHIU!=SizeVec-1){
-                AdvancedOutputToXY(Buttons[flagEBYCHIU].x1,Buttons[flagEBYCHIU].y1,TurnWhite,Buttons[flagEBYCHIU].Text);
+    int SizeVec = size(Buttons);
+    int flagEBYCHIU = 0;
+    AdvancedOutputToXY(Buttons[flagEBYCHIU].x1, Buttons[flagEBYCHIU].y1, TurnBackGreen, Buttons[flagEBYCHIU].Text);
+    for (;;) {
+        int Key = _getch();
+        if (KeyCheck(Key) == "tab") {
+            if (flagEBYCHIU != SizeVec - 1) {
+                AdvancedOutputToXY(Buttons[flagEBYCHIU].x1, Buttons[flagEBYCHIU].y1, TurnWhite,
+                                   Buttons[flagEBYCHIU].Text);
                 flagEBYCHIU++;
-                AdvancedOutputToXY(Buttons[flagEBYCHIU].x1,Buttons[flagEBYCHIU].y1,TurnBackGreen,Buttons[flagEBYCHIU].Text);
-            } else{
-                AdvancedOutputToXY(Buttons[flagEBYCHIU].x1,Buttons[flagEBYCHIU].y1,TurnWhite,Buttons[flagEBYCHIU].Text);
-                flagEBYCHIU=0;
-                AdvancedOutputToXY(Buttons[flagEBYCHIU].x1,Buttons[flagEBYCHIU].y1,TurnBackGreen,Buttons[flagEBYCHIU].Text);
+                AdvancedOutputToXY(Buttons[flagEBYCHIU].x1, Buttons[flagEBYCHIU].y1, TurnBackGreen,
+                                   Buttons[flagEBYCHIU].Text);
+            } else {
+                AdvancedOutputToXY(Buttons[flagEBYCHIU].x1, Buttons[flagEBYCHIU].y1, TurnWhite,
+                                   Buttons[flagEBYCHIU].Text);
+                flagEBYCHIU = 0;
+                AdvancedOutputToXY(Buttons[flagEBYCHIU].x1, Buttons[flagEBYCHIU].y1, TurnBackGreen,
+                                   Buttons[flagEBYCHIU].Text);
             }
-        }if(KeyCheck(Key)=="enter" and flagEBYCHIU!=SizeVec-1){
+        }
+        if (KeyCheck(Key) == "enter" and flagEBYCHIU != SizeVec - 1) {
             Buttons[flagEBYCHIU].Action();
             system("cls");
             break;
-        }else if(KeyCheck(Key)=="enter" and flagEBYCHIU==SizeVec-1){
+        } else if (KeyCheck(Key) == "enter" and flagEBYCHIU == SizeVec - 1) {
             exit(999);
-        } else if (KeyCheck(Key)=="esc") {
+        } else if (KeyCheck(Key) == "esc") {
             continue;
         }
     }
@@ -374,6 +407,7 @@ int UserInterface::SelectionMode() {
 void UserInterface::AddButton(Button Button) {
     Buttons.push_back(Button);
 }
+
 void UserInterface::DeleteButtons() {
     Buttons.clear();
 }
@@ -390,8 +424,8 @@ int UserInterface::PersonalArea() {
 
 Button::Button(int x1, int y1, string Text, ::function<string(int, int, const char *, char)> Function) {
     this->Text = Text;
-    this->x1=x1;
-    this->y1=y1;
+    this->x1 = x1;
+    this->y1 = y1;
     gotoxy(x1, y1);
     cout << Text;
     Container = Function;
@@ -400,8 +434,8 @@ Button::Button(int x1, int y1, string Text, ::function<string(int, int, const ch
 
 Button::Button(int x1, int y1, string Text, ::function<void(int, int)> Function) {
     this->Text = Text;
-    this->x1=x1;
-    this->y1=y1;
+    this->x1 = x1;
+    this->y1 = y1;
     gotoxy(x1, y1);
     cout << Text;
     Container1 = Function;
@@ -410,8 +444,8 @@ Button::Button(int x1, int y1, string Text, ::function<void(int, int)> Function)
 
 Button::Button(int x1, int y1, string Text, ::function<void()> Function) {
     this->Text = Text;
-    this->x1=x1;
-    this->y1=y1;
+    this->x1 = x1;
+    this->y1 = y1;
     gotoxy(x1, y1);
     cout << Text;
     Container2 = Function;
