@@ -12,6 +12,23 @@ vector<string> UserInterface::Date{"01.01", "20.04", "12.05", "10.06", "09.07", 
 /*============================================TOOL FUNCTIONS==============================================================
 ========================================================================================================================*/
 
+
+std::vector<std::string> split(std::string s, std::string delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    std::string token;
+    std::vector<std::string> res;
+
+    while ((pos_end = s.find(delimiter, pos_start)) != std::string::npos) {
+        token = s.substr(pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back(token);
+    }
+
+    res.push_back(s.substr(pos_start));
+    return res;
+}
+
+
 void UserInterface::DrawFrame(int x1, int y1, int x2, int y2) {
     TurnAqua;
     for (int i = x1; i < x2 + 1; i++) {
@@ -280,8 +297,17 @@ void UserInterface::PersonalUserArea() {
     DrawFrame(0, 0, 119, 29);
     AdvancedOutputToXY(2, 3, TurnWhite, "login : " + Client::User.Login);
     AdvancedOutputToXY(2, 5, TurnWhite, "user id : " + Client::User.ID);
+
     AdvancedOutputToXY(20, 3, TurnWhite, "ALL RESERVED BY " + Client::User.Login);
-    AdvancedOutputToXY(20, 5, TurnWhite, Client::AskServer("DFFR " + Client::User.Login + "%"));
+    string Str = Client::AskServer("DFFR " + Client::User.Login + "%");
+    std::string delimiter = "\n";
+    vector<string> reserv = split(Str, delimiter);
+    int CurrentY = 5;
+    for (auto i: reserv) {
+        AdvancedOutputToXY(20, CurrentY, TurnYellow, i);
+        CurrentY += 2;
+    }
+    //AdvancedOutputToXY(20, 5, TurnWhite, Client::AskServer("DFFR " + Client::User.Login + "%"));
     AdvancedOutputToXY(70, 5, TurnWhite, "Exit Account");
     AdvancedOutputToXY(70, 7, TurnWhite, "Exit System");
     AdvancedOutputToXY(70, 3, TurnBackGreen, "Reserve somethink");
@@ -292,27 +318,106 @@ void UserInterface::PersonalUserArea() {
             AdvancedOutputToXY(70, 3, TurnWhite, "Reserve somethink");
             AdvancedOutputToXY(70, 5, TurnBackGreen, "Exit Account");
             Couter++;
-        } else if (KeyCheck(Key) == "tab" and (Couter+1) % 3 == 0) {
+        } else if (KeyCheck(Key) == "tab" and (Couter + 1) % 3 == 0) {
             AdvancedOutputToXY(70, 5, TurnWhite, "Exit Account");
             AdvancedOutputToXY(70, 7, TurnBackGreen, "Exit System");
             Couter++;
         } else if (KeyCheck(Key) == "tab" and (Couter) % 3 == 0) {
             AdvancedOutputToXY(70, 7, TurnWhite, "Exit System");
-            AdvancedOutputToXY(70, 3,TurnBackGreen , "Reserve somethink");
+            AdvancedOutputToXY(70, 3, TurnBackGreen, "Reserve somethink");
             Couter++;
-        }else if (KeyCheck(Key)=="enter" and Couter%3==0){
+        } else if (KeyCheck(Key) == "enter" and Couter % 3 == 0) {
             exit(666);
-        }else if (KeyCheck(Key)=="enter" and (Couter+1)%3==0){
+        } else if (KeyCheck(Key) == "enter" and (Couter + 1) % 3 == 0) {
             system("cls");
             LogMenu();
             break;
-        }else if(KeyCheck(Key)=="enter" and ((Couter+2)%3==0 or Couter==0)){
-            AdvancedOutputToXY(40,40,TurnRed,"baboduk");
+        } else if (KeyCheck(Key) == "enter" and ((Couter + 2) % 3 == 0)) {
+            system("cls");
+            Reservetions();
+            break;
         }
     }
 
     wait;
 
+}
+
+void UserInterface::Reservetions() {
+    DrawFrame(0, 0, 119, 29);
+    //AdvancedOutputToXY(20, 5, TurnWhite, Client::AskServer("AALL " ));
+    AdvancedOutputToXY(70, 9, TurnWhite, "Back to Personal Area");
+    AdvancedOutputToXY(70, 12, TurnWhite, "Exit Account");
+    AdvancedOutputToXY(70, 15, TurnWhite, "Exit System");
+    AdvancedOutputToXY(10, 4, TurnBackGreen, "Available Reservetions");
+    int Couter = 1;
+    for (;;) {
+        int Key = _getch();
+        if (KeyCheck(Key) == "tab" and (Couter + 3) % 4 == 0) {
+            AdvancedOutputToXY(10, 4, TurnWhite, "Available Reservetions");
+            AdvancedOutputToXY(70, 9, TurnBackGreen, "Back to Personal Area");
+            Couter++;
+        } else if (KeyCheck(Key) == "tab" and (Couter + 2) % 4 == 0) {
+            AdvancedOutputToXY(70, 9, TurnWhite, "Back to Personal Area");
+            AdvancedOutputToXY(70, 12, TurnBackGreen, "Exit Account");
+            Couter++;
+        } else if (KeyCheck(Key) == "tab" and (Couter + 1) % 4 == 0) {
+            AdvancedOutputToXY(70, 12, TurnWhite, "Exit Account");
+            AdvancedOutputToXY(70, 15, TurnBackGreen, "Exit System");
+            Couter++;
+        } else if (KeyCheck(Key) == "tab" and (Couter) % 4 == 0) {
+            AdvancedOutputToXY(70, 15, TurnWhite, "Exit System");
+            AdvancedOutputToXY(10, 4, TurnBackGreen, "Available Reservetions");
+            Couter++;
+        } else if (KeyCheck(Key) == "enter" and (Couter + 2) % 4 == 0) {
+            system("cls");
+            PersonalUserArea();
+            break;
+        } else if (KeyCheck(Key) == "enter" and (Couter + 1) % 4 == 0) {
+            system("cls");
+            LogMenu();
+            break;
+        } else if (KeyCheck(Key) == "enter" and (Couter) % 4 == 0) {
+            exit(666);
+        } else if (KeyCheck(Key) == "enter" and (Couter + 3) % 4 == 0) {
+            string Str = Client::AskServer("AALL ");
+            std::string delimiter = "\n";
+            vector<string> reserv = split(Str, delimiter);
+            int CurrentY = 6;
+            for (auto i: reserv) {
+                AdvancedOutputToXY(10, CurrentY, TurnWhite, i);
+                CurrentY += 1;
+            }
+            AdvancedOutputToXY(7, 6, TurnBackGreen, "=>");
+            int couter = 0;
+            int lenth = reserv.capacity() - 1;
+            int currenty = 6;
+            for (;;) {
+                int key = _getch();
+                if (KeyCheck(key) == "tab" and couter != lenth - 1) {
+                    AdvancedOutputToXY(7, currenty, "  ");
+                    currenty++;
+                    AdvancedOutputToXY(7, currenty, TurnBackGreen, "=>");
+                    couter++;
+                } else if (KeyCheck(key) == "tab" and couter == lenth - 1) {
+                    AdvancedOutputToXY(7, currenty, "  ");
+                    AdvancedOutputToXY(7, currenty - lenth + 1, TurnBackGreen, "=>");
+                    couter = 0;
+                    currenty = 6;
+                } else if (KeyCheck(key) == "esc" and (Couter + 3) % 4 == 0) {
+                    Clear(10, 6, 50, 27);
+                    AdvancedOutputToXY(7,currenty,"  ");
+                    gotoxy(32, 4);
+                    break;
+                } else if (KeyCheck(key) == "enter") {
+//ТУТ
+
+
+
+                }
+            }
+        }
+    }
 }
 
 
@@ -422,7 +527,11 @@ int UserInterface::PersonalArea() {
 }
 
 
-Button::Button(int x1, int y1, string Text, ::function<string(int, int, const char *, char)> Function) {
+Button::Button(int
+               x1, int
+               y1, string
+               Text, ::function<string(int, int, const char *, char)>
+               Function) {
     this->Text = Text;
     this->x1 = x1;
     this->y1 = y1;
@@ -432,7 +541,11 @@ Button::Button(int x1, int y1, string Text, ::function<string(int, int, const ch
     UserInterface::AddButton(*this);
 }
 
-Button::Button(int x1, int y1, string Text, ::function<void(int, int)> Function) {
+Button::Button(int
+               x1, int
+               y1, string
+               Text, ::function<void(int, int)>
+               Function) {
     this->Text = Text;
     this->x1 = x1;
     this->y1 = y1;
@@ -442,7 +555,11 @@ Button::Button(int x1, int y1, string Text, ::function<void(int, int)> Function)
     UserInterface::AddButton(*this);
 }
 
-Button::Button(int x1, int y1, string Text, ::function<void()> Function) {
+Button::Button(int
+               x1, int
+               y1, string
+               Text, ::function<void()>
+               Function) {
     this->Text = Text;
     this->x1 = x1;
     this->y1 = y1;
@@ -451,6 +568,7 @@ Button::Button(int x1, int y1, string Text, ::function<void()> Function) {
     Container2 = Function;
     UserInterface::AddButton(*this);
 }
+
 
 
 
