@@ -45,6 +45,7 @@
 #define VK_DELETE	0x2E
 
 #define MAX_INPUT "12345678"
+#define MAX_INDEX "9"
 
 using namespace std::this_thread;
 using namespace std::chrono;

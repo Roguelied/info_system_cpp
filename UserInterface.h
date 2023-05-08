@@ -6,7 +6,7 @@
 class Button;
 class UserInterface {
 private:
-
+    static vector<string> reserv;
     static vector <string> Date;
     static string AdminLoggin;
     static string AdminPsswrd;
@@ -35,6 +35,8 @@ public:
     static void PersonalAdminArea();
     static void PersonalUserArea();
     static void Reservetions();
+    static void UpdateBase();
+    static void BookingAdd();
 };
 
 
