@@ -265,9 +265,6 @@ void UserInterface::PersonalUserArea() {
             break;
         }
     }
-
-    wait;
-
 }
 
 void UserInterface::Reservations() {
@@ -334,8 +331,6 @@ void UserInterface::Reservations() {
             int length = reserv3.size();
             int currenty = 6;
             for (;;) {
-                gotoxy(0, 0);
-                cout << counter << reserv3.capacity();
                 int key = _getch();
                 if (KeyCheck(key) == "enter") {
                     string ResRequest;
@@ -344,7 +339,6 @@ void UserInterface::Reservations() {
                     ss >> Index >> Type >> Date >> Seat >> Name;
                     ResRequest = "RES " + Index + " " + Client::User.Login + "%";
                     string Result = Client::AskServer(ResRequest);
-                    cout << Result;
                     if (Result == "ALREADY RESERVED") {
                         AdvancedOutputToXY(44, currenty, TurnRed, "Already reserved");
                     } else {
@@ -745,15 +739,6 @@ void UserInterface::AddButton(Button Button) {
 
 void UserInterface::DeleteButtons() {
     Buttons.clear();
-}
-
-int UserInterface::PersonalArea() {
-    string ListOfAvailable = Client::AskServer("AALL");
-    cout << ListOfAvailable;
-    DrawFrame(0, 0, 119, 29);
-    AdvancedOutputToXY(5, 10, TurnBackGreen, Client::User.Login);
-
-
 }
 
 
