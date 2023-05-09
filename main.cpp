@@ -21,7 +21,24 @@ int main() {
     InitializeSettings();
     Client::Initialize();
     UserInterface::StartMenu();
+    //"17    ACLASS    09.11.2023/18:15    32    NONE
+    //17    ACLASS    09.11.2023/18:15    32    NONE
+    //17    ACLASS    09.11.2023/18:15    32    NONE"
 
+//    stringstream ss(i);
+//
+//    struct Reservation {
+//        string index;
+//    };
+//
+//    AskServer("RES " + index;)
+//    Reservation Reservation;
+//    ss >> index;
+
+
+
+
+    //cout<<Client::AskServer("DFFR Admin%");
 
     //cout << Client::AskServer("AALL");
     //UserInterface::PersonalArea();
