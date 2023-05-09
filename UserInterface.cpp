@@ -1,35 +1,10 @@
 //super govnocode by notFOUND
 #include "UserInterface.h"
 
-
-string UserInterface::AdminPsswrd = "admin";
-string UserInterface::AdminLoggin = "admin";
-string UserInterface::ServerPsswrd = "server_";
-string UserInterface::ServerLoggin = "server_";
 vector<Button> UserInterface::Buttons = {};
-vector<string> UserInterface::Date{"01.01", "20.04", "12.05", "10.06", "09.07", "09.11", "19.11"};
-vector<string> UserInterface::reserv = {};
-
+vector<string> UserInterface::reserv;
 /*============================================TOOL FUNCTIONS==============================================================
 ========================================================================================================================*/
-
-
-std::vector<std::string> split(std::string s, std::string delimiter) {
-    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
-    std::string token;
-    std::vector<std::string> res;
-
-    while ((pos_end = s.find(delimiter, pos_start)) != std::string::npos) {
-        token = s.substr(pos_start, pos_end - pos_start);
-        pos_start = pos_end + delim_len;
-        res.push_back(token);
-    }
-
-    res.push_back(s.substr(pos_start));
-    return res;
-}
-
-
 void UserInterface::DrawFrame(int x1, int y1, int x2, int y2) {
     TurnAqua;
     for (int i = x1; i < x2 + 1; i++) {
@@ -246,53 +221,6 @@ int UserInterface::LogMenu() {
     }
 }
 
-string UserInterface::DateChoice() {
-    string ListOfAvailable = Client::AskServer("AALL");
-    cout << ListOfAvailable;
-    int CurrentY = 21;
-    int CurrentX = 45;
-    int Selector = 0;
-    DrawFrame(0, 0, 210, 53);
-    AdvancedOutputToXY(CurrentX - 5, 11, TurnWhite, "CHOSE THE DATE");
-    AdvancedOutputToXY(CurrentX, 24, TurnWhite, Date[Selector + 1]);
-    AdvancedOutputToXY(CurrentX, 27, TurnWhite, Date[Selector + 2]);
-    AdvancedOutputToXY(CurrentX, 21, TurnBackGreen, Date[Selector]);
-    for (;;) {
-        int Key = _getch();
-        if (KeyCheck(Key) == "s" and CurrentY != 27) {
-            Selector++;
-            AdvancedOutputToXY(CurrentX, CurrentY, TurnWhite, Date[Selector - 1]);
-            CurrentY += 3;
-            AdvancedOutputToXY(CurrentX, CurrentY, TurnBackGreen, Date[Selector]);
-            gotoxy(CurrentX + 5, CurrentY);
-        } else if (KeyCheck(Key) == "s" and CurrentY == 27 and Selector < 6) {
-            Selector++;
-            AdvancedOutputToXY(CurrentX, CurrentY, TurnBackGreen, Date[Selector]);
-            AdvancedOutputToXY(CurrentX, CurrentY - 3, TurnWhite, Date[Selector - 1]);
-            AdvancedOutputToXY(CurrentX, CurrentY - 6, TurnWhite, Date[Selector - 2]);
-            gotoxy(CurrentX + 5, CurrentY);
-        } else if (KeyCheck(Key) == "w" and CurrentY != 21) {
-            Selector--;
-            CurrentY -= 3;
-            AdvancedOutputToXY(CurrentX, CurrentY, TurnBackGreen, Date[Selector]);
-            AdvancedOutputToXY(CurrentX, CurrentY + 3, TurnWhite, Date[Selector + 1]);
-            gotoxy(CurrentX + 5, CurrentY);
-        } else if (KeyCheck(Key) == "w" and CurrentY == 21 and Selector != 0) {
-            Selector--;
-            AdvancedOutputToXY(CurrentX, CurrentY, TurnBackGreen, Date[Selector]);
-            AdvancedOutputToXY(CurrentX, CurrentY + 3, TurnWhite, Date[Selector + 1]);
-            AdvancedOutputToXY(CurrentX, CurrentY + 3, TurnWhite, Date[Selector + 2]);
-            gotoxy(CurrentX + 5, CurrentY);
-        } else if (KeyCheck(Key) == "esc") {
-            Clear(40, 8, 60, 30);
-            gotoxy(25, 18);
-            break;
-        } else if (KeyCheck(Key) == "enter") {
-            exit(5);
-        }
-    }
-}
-
 void UserInterface::PersonalUserArea() {
     DrawFrame(0, 0, 119, 29);
     AdvancedOutputToXY(2, 3, TurnWhite, "login : " + Client::User.Login);
@@ -300,7 +228,7 @@ void UserInterface::PersonalUserArea() {
     AdvancedOutputToXY(20, 3, TurnWhite, "ALL RESERVED BY " + Client::User.Login);
     string Str = Client::AskServer("DFFR " + Client::User.Login + "%");
     std::string delimiter = "\n";
-    vector<string>reserv7  = split(Str, delimiter);
+    vector<string> reserv7 = split(Str, delimiter);
     int CurrentY = 5;
     for (auto i: reserv7) {
         AdvancedOutputToXY(20, CurrentY, TurnYellow, i);
@@ -344,97 +272,102 @@ void UserInterface::PersonalUserArea() {
 
 void UserInterface::Reservations() {
     DrawFrame(0, 0, 119, 29);
-    string Str = Client::AskServer("AALL");
-    std::string delimiter = "\n";
-    vector<string> reserv3 = split(Str, delimiter);
     int CurrentY = 6;
+
+
+    string Str = Client::AskServer("AALL");
+    vector<string> reserv3 = split(Str, "\n");
+
+    for (auto i = 0; i < reserv3.capacity(); i++) {
+        if (reserv3[i].empty()) {
+            reserv3.erase(reserv3.begin() + i);
+        }
+    }
+
     for (auto i: reserv3) {
         AdvancedOutputToXY(10, CurrentY, TurnWhite, i);
         CurrentY += 1;
     }
+
     AdvancedOutputToXY(70, 9, TurnWhite, "Back to Personal Area");
     AdvancedOutputToXY(70, 12, TurnWhite, "Exit Account");
     AdvancedOutputToXY(70, 15, TurnWhite, "Exit System");
     AdvancedOutputToXY(10, 4, TurnBackGreen, "Available Reservations");
-    int Couter = 1;
+    int Couter = 0;
     for (;;) {
         int Key = _getch();
-        if (KeyCheck(Key) == "tab" and (Couter + 3) % 4 == 0) {
+        if (KeyCheck(Key) == "tab" and Couter == 0) {
             AdvancedOutputToXY(10, 4, TurnWhite, "Available Reservations");
             AdvancedOutputToXY(70, 9, TurnBackGreen, "Back to Personal Area");
             Couter++;
-        } else if (KeyCheck(Key) == "tab" and (Couter + 2) % 4 == 0) {
+        } else if (KeyCheck(Key) == "tab" and Couter == 1) {
             AdvancedOutputToXY(70, 9, TurnWhite, "Back to Personal Area");
             AdvancedOutputToXY(70, 12, TurnBackGreen, "Exit Account");
             Couter++;
-        } else if (KeyCheck(Key) == "tab" and (Couter + 1) % 4 == 0) {
+        } else if (KeyCheck(Key) == "tab" and Couter == 2) {
             AdvancedOutputToXY(70, 12, TurnWhite, "Exit Account");
             AdvancedOutputToXY(70, 15, TurnBackGreen, "Exit System");
             Couter++;
-        } else if (KeyCheck(Key) == "tab" and (Couter) % 4 == 0) {
+        } else if (KeyCheck(Key) == "tab" and Couter == 3) {
             AdvancedOutputToXY(70, 15, TurnWhite, "Exit System");
             AdvancedOutputToXY(10, 4, TurnBackGreen, "Available Reservations");
-            Couter++;
-        } else if (KeyCheck(Key) == "enter" and (Couter + 2) % 4 == 0) {
+            Couter = 0;
+        } else if (KeyCheck(Key) == "enter" and Couter == 1) {  // back to
             system("cls");
             PersonalUserArea();
             break;
-        } else if (KeyCheck(Key) == "enter" and (Couter + 1) % 4 == 0) {
+        } else if (KeyCheck(Key) == "enter" and Couter == 2) {  // logout
             system("cls");
             LogMenu();
             break;
-        } else if (KeyCheck(Key) == "enter" and (Couter) % 4 == 0) {
+        } else if (KeyCheck(Key) == "enter" and Couter == 3) {  // exit
             exit(666);
-        } else if (KeyCheck(Key) == "enter" and (Couter + 3) % 4 == 0) {
-            int CurrentY = 6;
+        } else if (KeyCheck(Key) == "enter" and Couter == 0) {  // reserve
+
+            CurrentY = 6;
             for (auto i: reserv3) {
                 AdvancedOutputToXY(10, CurrentY, TurnWhite, i);
                 CurrentY += 1;
             }
             AdvancedOutputToXY(7, 6, TurnBackGreen, "=>");
-            int couter = 0;
-            int lenth = reserv3.capacity();
+            int counter = 0;
+            int length = reserv3.size();
             int currenty = 6;
             for (;;) {
                 gotoxy(0, 0);
-                cout << "        ";
-                gotoxy(0, 0);
-                cout << couter;
-
-
+                cout << counter << reserv3.capacity();
                 int key = _getch();
                 if (KeyCheck(key) == "enter") {
                     string ResRequest;
-                    stringstream ss(reserv3[couter]);
+                    stringstream ss(reserv3[counter]);
                     string Index, Type, Date, Seat, Name;
                     ss >> Index >> Type >> Date >> Seat >> Name;
-                    ResRequest = "RES " + Index + " "  + Client::User.Login + "%";
+                    ResRequest = "RES " + Index + " " + Client::User.Login + "%";
                     string Result = Client::AskServer(ResRequest);
+                    cout << Result;
                     if (Result == "ALREADY RESERVED") {
-                        AdvancedOutputToXY(25, currenty, TurnRed, "Already reserved");
-                    } else  {
-                        AdvancedOutputToXY(7+2, currenty, TurnGreen, Index + " " + Type + " " + Date + " " + Seat  + " " + Client::User.Login + "  Reserved");
+                        AdvancedOutputToXY(44, currenty, TurnRed, "Already reserved");
+                    } else {
+                        AdvancedOutputToXY(7 + 2, currenty, TurnGreen,
+                                           Index + " " + Type + " " + Date + " " + Seat + " " + Client::User.Login +
+                                           "  Reserved");
                     }
                 }
                 TurnWhite;
-
-                if (KeyCheck(key) == "tab" and couter != lenth - 1) {
+                if (KeyCheck(key) == "tab" and counter != length - 1) {
                     AdvancedOutputToXY(7, currenty, "  ");
                     currenty++;
                     AdvancedOutputToXY(7, currenty, TurnBackGreen, "=>");
-                    couter++;
-                } else if (KeyCheck(key) == "tab" and couter == lenth - 1) {
+                    counter++;
+                } else if (KeyCheck(key) == "tab" and counter == length - 1) {
                     AdvancedOutputToXY(7, currenty, "  ");
-                    AdvancedOutputToXY(7, currenty - lenth + 1, TurnBackGreen, "=>");
-                    couter = 0;
+                    AdvancedOutputToXY(7, currenty - length + 1, TurnBackGreen, "=>");
+                    counter = 0;
                     currenty = 6;
-                } else if (KeyCheck(key) == "esc" and (Couter + 3) % 4 == 0) {
-                    Clear(10, 6, 50, 27);
+                } else if (KeyCheck(key) == "esc") {
                     AdvancedOutputToXY(7, currenty, "  ");
                     gotoxy(32, 4);
                     break;
-                } else if (KeyCheck(key) == "enter") {
-//ТУТ
                 }
             }
         }
@@ -621,24 +554,20 @@ void UserInterface::BookingAdd() {
             AdvancedOutputToXY(3, 3, TurnWhite, "Chose class");
             AdvancedOutputToXY(20, 3, TurnBackGreen, "Chose date");
             Couter++;
-        }
-        else if (KeyCheck(Key) == "tab" and (Couter + 2) % 4 == 0) {
+        } else if (KeyCheck(Key) == "tab" and (Couter + 2) % 4 == 0) {
             AdvancedOutputToXY(20, 3, TurnWhite, "Chose date");
             AdvancedOutputToXY(60, 3, TurnBackGreen, "Enter seat");
             Couter++;
 
-        }
-        else if (KeyCheck(Key) == "tab" and (Couter+1) % 4 == 0) {
+        } else if (KeyCheck(Key) == "tab" and (Couter + 1) % 4 == 0) {
             AdvancedOutputToXY(60, 3, TurnWhite, "Enter seat");
             AdvancedOutputToXY(100, 3, TurnBackGreen, "exit");
             Couter++;
-        }
-        else if (KeyCheck(Key) == "tab" and (Couter) % 4 == 0) {
+        } else if (KeyCheck(Key) == "tab" and (Couter) % 4 == 0) {
             AdvancedOutputToXY(100, 3, TurnWhite, "exit");
             AdvancedOutputToXY(3, 3, TurnBackGreen, "Chose class");
             Couter++;
-        }
-        else if (KeyCheck(Key) == "enter" and (Couter + 3) % 4 == 0) {
+        } else if (KeyCheck(Key) == "enter" and (Couter + 3) % 4 == 0) {
             int CurrenrClass = 0;
             AdvancedOutputToXY(3, 8, TurnWhite, Class[1]);
             AdvancedOutputToXY(3, 10, TurnWhite, Class[2]);
@@ -667,8 +596,7 @@ void UserInterface::BookingAdd() {
                     break;
                 }
             }
-        }
-        else if (KeyCheck(Key) == "enter" and (Couter + 2) % 4 == 0) {
+        } else if (KeyCheck(Key) == "enter" and (Couter + 2) % 4 == 0) {
             int CurrenDate = 0;
             AdvancedOutputToXY(20, 7, Datee[1]);
             AdvancedOutputToXY(20, 8, Datee[2]);
@@ -733,8 +661,7 @@ void UserInterface::BookingAdd() {
                     break;
                 }
             }
-        }
-        else if (KeyCheck(Key) == "enter" and (Couter+1) % 4 == 0) {
+        } else if (KeyCheck(Key) == "enter" and (Couter + 1) % 4 == 0) {
             AdvancedOutputToXY(60, 6, "enter seat : ");
             for (;;) {
                 string SeatSelect = Input(73, 6, MAX_INDEX, ' ');
@@ -765,8 +692,7 @@ void UserInterface::BookingAdd() {
                     }
                 }
             }
-        }
-        else if (KeyCheck(Key)=="enter" and Couter%4==0){
+        } else if (KeyCheck(Key) == "enter" and Couter % 4 == 0) {
             system("cls");
             PersonalAdminArea();
             break;

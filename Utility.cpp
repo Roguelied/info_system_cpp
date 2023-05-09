@@ -11,8 +11,6 @@ void gotoxy(int x, int y)
 void InitializeSettings() {
     SetConsoleOutputCP( 65001 );
     system("title Information system prototype");
-    //::SendMessage(::GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000); //fullscreen
-    //system("mode con cols=129 lines=32");
 }
 
 string KeyCheck(int Key) {
@@ -58,7 +56,20 @@ void AdvancedOutputToXY(int x, int y, WINBOOL Color,  int num) { //overload
     TurnWhite;
 }
 
+std::vector<std::string> split(std::string s, std::string delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    std::string token;
+    std::vector<std::string> res;
 
+    while ((pos_end = s.find(delimiter, pos_start)) != std::string::npos) {
+        token = s.substr(pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back(token);
+    }
+
+    res.push_back(s.substr(pos_start));
+    return res;
+}
 
 bool in_range(char *buff, const char *max) {
     int lb = strlen(buff), lm = strlen(max);
