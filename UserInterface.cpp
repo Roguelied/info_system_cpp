@@ -333,7 +333,7 @@ void UserInterface::PersonalUserArea() {
             break;
         } else if (KeyCheck(Key) == "enter" and ((Couter + 2) % 3 == 0)) {
             system("cls");
-            Reservetions();
+            Reservations();
             break;
         }
     }
@@ -342,18 +342,25 @@ void UserInterface::PersonalUserArea() {
 
 }
 
-void UserInterface::Reservetions() {
+void UserInterface::Reservations() {
     DrawFrame(0, 0, 119, 29);
-    //AdvancedOutputToXY(20, 5, TurnWhite, Client::AskServer("AALL " ));
+    string Str = Client::AskServer("AALL");
+    std::string delimiter = "\n";
+    vector<string> reserv3 = split(Str, delimiter);
+    int CurrentY = 6;
+    for (auto i: reserv3) {
+        AdvancedOutputToXY(10, CurrentY, TurnWhite, i);
+        CurrentY += 1;
+    }
     AdvancedOutputToXY(70, 9, TurnWhite, "Back to Personal Area");
     AdvancedOutputToXY(70, 12, TurnWhite, "Exit Account");
     AdvancedOutputToXY(70, 15, TurnWhite, "Exit System");
-    AdvancedOutputToXY(10, 4, TurnBackGreen, "Available Reservetions");
+    AdvancedOutputToXY(10, 4, TurnBackGreen, "Available Reservations");
     int Couter = 1;
     for (;;) {
         int Key = _getch();
         if (KeyCheck(Key) == "tab" and (Couter + 3) % 4 == 0) {
-            AdvancedOutputToXY(10, 4, TurnWhite, "Available Reservetions");
+            AdvancedOutputToXY(10, 4, TurnWhite, "Available Reservations");
             AdvancedOutputToXY(70, 9, TurnBackGreen, "Back to Personal Area");
             Couter++;
         } else if (KeyCheck(Key) == "tab" and (Couter + 2) % 4 == 0) {
@@ -366,7 +373,7 @@ void UserInterface::Reservetions() {
             Couter++;
         } else if (KeyCheck(Key) == "tab" and (Couter) % 4 == 0) {
             AdvancedOutputToXY(70, 15, TurnWhite, "Exit System");
-            AdvancedOutputToXY(10, 4, TurnBackGreen, "Available Reservetions");
+            AdvancedOutputToXY(10, 4, TurnBackGreen, "Available Reservations");
             Couter++;
         } else if (KeyCheck(Key) == "enter" and (Couter + 2) % 4 == 0) {
             system("cls");
@@ -379,9 +386,6 @@ void UserInterface::Reservetions() {
         } else if (KeyCheck(Key) == "enter" and (Couter) % 4 == 0) {
             exit(666);
         } else if (KeyCheck(Key) == "enter" and (Couter + 3) % 4 == 0) {
-            string Str = Client::AskServer("AALL ");
-            std::string delimiter = "\n";
-            vector<string> reserv3 = split(Str, delimiter);
             int CurrentY = 6;
             for (auto i: reserv3) {
                 AdvancedOutputToXY(10, CurrentY, TurnWhite, i);
@@ -389,10 +393,31 @@ void UserInterface::Reservetions() {
             }
             AdvancedOutputToXY(7, 6, TurnBackGreen, "=>");
             int couter = 0;
-            int lenth = reserv3.capacity() - 1;
+            int lenth = reserv3.capacity();
             int currenty = 6;
             for (;;) {
+                gotoxy(0, 0);
+                cout << "        ";
+                gotoxy(0, 0);
+                cout << couter;
+
+
                 int key = _getch();
+                if (KeyCheck(key) == "enter") {
+                    string ResRequest;
+                    stringstream ss(reserv3[couter]);
+                    string Index, Type, Date, Seat, Name;
+                    ss >> Index >> Type >> Date >> Seat >> Name;
+                    ResRequest = "RES " + Index + " "  + Client::User.Login + "%";
+                    string Result = Client::AskServer(ResRequest);
+                    if (Result == "ALREADY RESERVED") {
+                        AdvancedOutputToXY(25, currenty, TurnRed, "Already reserved");
+                    } else  {
+                        AdvancedOutputToXY(7+2, currenty, TurnGreen, Index + " " + Type + " " + Date + " " + Seat  + " " + Client::User.Login + "  Reserved");
+                    }
+                }
+                TurnWhite;
+
                 if (KeyCheck(key) == "tab" and couter != lenth - 1) {
                     AdvancedOutputToXY(7, currenty, "  ");
                     currenty++;

@@ -10,9 +10,9 @@
 //          UFND Login%Pass%    UDEL 1      DADD BCLASS%DATA/TIME%34%NONE%
 //          DFND BCLASS%DATA/TIME%34%LOGIN%
 //          DDEL 12
-//          RES 23 LOGIN
+//          RES 23 LOGIN%
 //          DALL
-//
+//          DFFR ABOBUS - can be used without %
 //
 
 // UREG Login%Passwd%

@@ -34,7 +34,7 @@ public:
     static string DateChoice();
     static void PersonalAdminArea();
     static void PersonalUserArea();
-    static void Reservetions();
+    static void Reservations();
     static void UpdateBase();
     static void BookingAdd();
 };
