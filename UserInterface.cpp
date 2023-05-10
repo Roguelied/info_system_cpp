@@ -464,13 +464,13 @@ void UserInterface::PersonalAdminArea() {
             AdvancedOutputToXY(5, 18, TurnWhite, "index : ");
             for (;;) {
                 string DeleteIndex = Input(13, 18, MAX_INDEX, ' ');
-                if (DeleteIndex == "-1" or DeleteIndex.empty()) {
+                if (DeleteIndex == "-1" or DeleteIndex.empty() or DeleteIndex == "0" or DeleteIndex == "00" or DeleteIndex == "01" or DeleteIndex == "02" or DeleteIndex == "03" or DeleteIndex == "04" or DeleteIndex == "05" or DeleteIndex == "06" or DeleteIndex == "07" or DeleteIndex == "08" or DeleteIndex == "09") {
                     Clear(3, 17, 27, 21);
-                    gotoxy(13, 7);
+                    gotoxy(14, 7);
                     break;
                 } else {
                     string str = Client::AskServer("UDEL " + DeleteIndex);
-                    if (str == "NOTFOUND") {
+                    if (str == "NOTFOUND" ) {
                         AdvancedOutputToXY(9, 20, TurnRed, "User not found");
                         sleep_for(milliseconds(1000));
                         Clear(3, 17, 27, 21);
@@ -498,9 +498,9 @@ void UserInterface::PersonalAdminArea() {
             AdvancedOutputToXY(5, 18, TurnWhite, "book index : ");
             for (;;) {
                 string DeleteDataIndex = Input(18, 18, MAX_INDEX, ' ');
-                if (DeleteDataIndex == "-1" or DeleteDataIndex.empty()) {
+                if (DeleteDataIndex == "-1" or DeleteDataIndex.empty() or DeleteDataIndex == "00" or DeleteDataIndex == "01" or DeleteDataIndex == "02" or DeleteDataIndex == "03" or DeleteDataIndex == "04" or DeleteDataIndex == "05" or DeleteDataIndex == "06" or DeleteDataIndex == "07" or DeleteDataIndex == "08" or DeleteDataIndex == "09") {
                     Clear(3, 17, 27, 21);
-                    gotoxy(11, 11);
+                    gotoxy(17, 11);
                     break;
                 } else {
                     string str1 = Client::AskServer("DDEL " + DeleteDataIndex);
