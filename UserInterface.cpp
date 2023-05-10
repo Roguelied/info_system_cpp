@@ -35,8 +35,6 @@ string UserInterface::Input(int x, int y, char *length, char replace) {
     char buffer[128] = {0};
     char *ptr = buffer;
     unsigned char symbol;
-
-
     gotoxy(x, y); //where field is
 
     do {
@@ -57,7 +55,7 @@ string UserInterface::Input(int x, int y, char *length, char replace) {
             continue;
         }
 
-        if (symbol >= VK_SPACE and (in_range(buffer, length))) {
+        if (symbol >= VK_SPACE and symbol!='%' and (in_range(buffer, length))) {
             *ptr++ = symbol;
             if (replace == ' ') { putch(symbol); }
             else { putch(replace); }
@@ -783,13 +781,3 @@ Button::Button(int
     Container2 = Function;
     UserInterface::AddButton(*this);
 }
-
-
-
-
-
-
-
-
-
-
