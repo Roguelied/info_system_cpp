@@ -64,8 +64,6 @@ int Client::Initialize() {
 
 string Client::AskServer(string Command) {
     int Result;
-
-    //clear the buffer
     for (int i = 0; i < (int) strlen(SendBuffer); i++) {
         SendBuffer[i] = ' ';
     }

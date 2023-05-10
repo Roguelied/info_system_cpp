@@ -59,4 +59,8 @@ bool in_range(char *buff, const char *max);
 void AdvancedOutputToXY(int x, int y, string str = "", WINBOOL Color = TurnWhite);
 void AdvancedOutputToXY(int x, int y, WINBOOL Color = TRUE,  string str = "");
 void AdvancedOutputToXY(int x, int y, WINBOOL Color,  int num);
+std::vector<std::string> split(std::string s, std::string delimiter);
+
+
+
 #endif //INFO_SYSTEM_CPP_UTILITY_H
