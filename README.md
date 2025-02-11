@@ -1,7 +1,7 @@
-Client side project for socket practice
+Socket/network implementation project
 ---
 
-Server side is info_system_cpp_server, team project
+Client-side repository, server side is info_system_cpp_server, team project
 
 ---
 **C++ / CMake**
